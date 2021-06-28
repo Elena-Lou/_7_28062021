@@ -6,13 +6,15 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const mysql = require("mysql");
-const db = mysql.createConnection({
+const connect = {
   host: "localhost",
 
-  user: "root",
+  user: process.env.MYSQL_USER,
 
-  password: "jPfRy3@$59h@YcYm",
-});
+  password: process.env.MYSQL_PASSWORD,
+};
+
+const db = mysql.createConnection(connect);
 
 db.connect(function (err) {
   if (err) throw err;
@@ -37,8 +39,5 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 app.use(helmet());
-
-
-
 
 module.exports = app;
