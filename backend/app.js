@@ -2,28 +2,8 @@ const express = require("express");
 
 const helmet = require("helmet");
 
-// const userRoutes = require("./routes/user");
-// const postRoutes = require("./routes/post");
-
-const mysql = require("mysql");
-const dotenv = require("dotenv");
-dotenv.config();
-
-const connect = {
-  host: process.env.MYSQL_HOST,
-
-  user: process.env.MYSQL_USER,
-
-  password: process.env.MYSQL_PASSWORD,
-};
-
-const DB = mysql.createConnection(connect);
-
-DB.connect(function (err) {
-  if (err) throw err;
-  console.log("Connectée à la base de données MySQL!");
-});
-
+const userRoutes = require("./routes/user");
+const postsRoutes = require("./routes/posts");
 
 const app = express();
 
@@ -45,7 +25,7 @@ app.use(helmet());
 // app.use("/images", express.static(path.join(__dirname, "images")));
 
 //Routes
-// app.use('/api/auth', userRoutes);
-// app.use('/api/posts', postRoutes);
+app.use('/api/auth', userRoutes);
+app.use('/api/posts', postsRoutes);
 
 module.exports = app;
