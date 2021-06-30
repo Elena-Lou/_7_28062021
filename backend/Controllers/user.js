@@ -8,53 +8,55 @@ dotenv.config();
 
 //creation d'utilisateur et cryptage du mot de passe
 exports.signup = (req, res, next) => {
-  bcrypt
-    .hash(req.body.password, 10)
+    DB.query(`SELECT * FROM users WHERE email = ${req.body.email}`, (error, results, fields) => {
+      if (results.length > 0 ) {
+        res.status(401).json({ message : "email déjà utilisé"});
 
-    .then((hash) => {
-      const user = new User({
-        email: req.body.email,
-        password: hash,
-      });
+      } else { 
 
-      user
-        .save()
-        .then(() => res.status(201).json({ message: "utilisateur créé" }))
+        bcrypt.hash(req.body.password, 10)
+        
+        .then((encryptedPassword) => {
+          DB.query(`INSERT INTO users (email, name, password) VALUES ('${req.body.email}', '${req.body.name}', '${encryptedPassword}')`, (error, results, fields) => {
+          if (error) {
+            return res.status(400).json({ error })
 
-        .catch((error) => res.status(400).json({ error }));
-    })
+          } res.status(201).json({ message: "utilisateur crée" })
+          })
+        });
+      }}
+      )};
 
-    .catch((error) => res.status(500).json({ error }));
-};
-
-//connexion de l'utilisateur et comparaison des chaînes de caractères des mdp cryptés
 exports.login = (req, res, next) => {
-  User.findOne({ email: req.body.email })
+  DB.query(`SELECT * FROM users WHERE email = ${req.body.email}`, (error, results, fields) => {
+    if (results.length > 0 ) {
+      bcrypt.compare(req.body.password, results[0].password)
 
-    .then((user) => {
-      if (!user) {
-        return res.status(401).json({ message: "utilisateur inconnu" });
-      }
-      bcrypt
-        .compare(req.body.password, user.password)
+      .then(valid => {
+        if(!valid) {
+          return res.status(401).json({message : "mot de passe erronné"});
 
-        .then((valid) => {
-          if (!valid) {
-            return res.status(401).json({ message: "mot de passe erronné" });
-          }
-          res.status(200).json({
-            userId: user._id,
-            token: jwt.sign(
-              //création d'un token unique pour authentifier les requêtes
-              { userId: user._id },
-              process.env.TOKEN,
-              { expiresIn: "24h" }
-            ),
+        } res.status(200).json({
+          userId: results[0].id,
+          name: results[0].name,
+          token: jwt.sign(
+            {userId: results[0].id},
+            process.env.TOKEN,
+            {expiresIn: "24h"}
+          )        
           });
         })
+        .catch(error => res.status(500).json({ error }));
 
-        .catch((error) => res.status(500).json({ error }));
-    })
+      } res.status(404).json({ message: "utilisateur inconnu" });
+  });
+};
 
-    .catch((error) => res.status(500).json({ error }));
+exports.deleteUser = (req, res, next) => {
+    db.query(`DELETE FROM users WHERE users.id = ${req.params.id}`, (error, results, fields) => {
+        if (error) {
+            return res.status(400).json({ error });
+
+        } res.status(200).json(results);
+    });
 };
