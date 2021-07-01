@@ -27,6 +27,7 @@ exports.signup = (req, res, next) => {
       }}
       )};
 
+//comparaison des mots de passe cryptés, encodage de l'userId dans un jeton
 exports.login = (req, res, next) => {
   DB.query(`SELECT * FROM users WHERE email = ${req.body.email}`, (error, results, fields) => {
     if (results.length > 0 ) {
@@ -52,11 +53,24 @@ exports.login = (req, res, next) => {
   });
 };
 
-exports.deleteUser = (req, res, next) => {
-    db.query(`DELETE FROM users WHERE users.id = ${req.params.id}`, (error, results, fields) => {
-        if (error) {
-            return res.status(400).json({ error });
+//acces au profil utlisateur 
+exports.viewUser = (req, res, next) => {
+  DB.query(`SELECT * FROM users WHERE users.id = ${req.params.id}`, (error, results, fields) => {
 
-        } res.status(200).json(results);
+    if (error) {
+      return res.status(404).json({ message : "utilisateur inconnu" });
+
+    } res.status(200).json(results);
+  });
+}
+
+//suppression du profil utilisateur
+exports.deleteUser = (req, res, next) => {
+    DB.query(`DELETE FROM users WHERE users.id = ${req.params.id}`, (error, results, fields) => {
+
+      if (error) {
+        return res.status(400).json({ error });
+
+      } res.status(200).json(results);
     });
 };

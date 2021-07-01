@@ -4,6 +4,7 @@ const helmet = require("helmet");
 
 const userRoutes = require("./routes/user");
 const postsRoutes = require("./routes/posts");
+const commentsRoutes = require("./Routes/comments");
 
 const app = express();
 
@@ -25,7 +26,8 @@ app.use(helmet());
 // app.use("/images", express.static(path.join(__dirname, "images")));
 
 //Routes
-app.use('/api/auth', userRoutes);
-app.use('/api/posts', postsRoutes);
+app.use("/api/auth", userRoutes);
+app.use("/api/posts", postsRoutes);
+app.use("/api/posts", commentsRoutes);
 
 module.exports = app;

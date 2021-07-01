@@ -2,7 +2,7 @@ const DB = require("../database_connection");
 
 
 exports.createPost = (req, res, next) => {
-        DB.query(`INSERT INTO posts (post_title, post_text, post_image, post_date) VALUES ( '${req.body.title}', '${req.body.text}, '${req.body.imageURL}, NOW())`, (error, results, fields) => {
+        DB.query(`INSERT INTO posts (post_title, post_text, post_image, post_date) VALUES ( '${req.body.title}', '${req.body.text}', '${req.body.imageURL}', NOW())`, (error, results, fields) => {
             if (error) {
                 return res.status(400).json({ error }); 
 
@@ -12,7 +12,7 @@ exports.createPost = (req, res, next) => {
 };
 
 exports.getOnePost = (req, res, next) => {
-    DB.query(`SELECT * FROM posts WHERE post.id = ${req.params.id}`, (error, results, fields) => {
+    DB.query(`SELECT * FROM posts WHERE posts.id = ${req.params.id}`, (error, results, fields) => {
         if (error) {
             return res.status(404).json({ error });
 
@@ -39,7 +39,7 @@ exports.modifyPost = (req, res, next) => {
 };
 
 exports.deletePost = (req, res, next) => {
-    DB.query(`DELETE FROM posts WHERE post.id = ${req.params.id}`, (error, results, fields) => {
+    DB.query(`DELETE FROM posts WHERE posts.id = ${req.params.id}`, (error, results, fields) => {
         if (error) {
             return res.status(500).json({ error });
 
