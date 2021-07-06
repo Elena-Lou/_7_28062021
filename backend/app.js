@@ -2,8 +2,8 @@ const express = require("express");
 
 const helmet = require("helmet");
 
-const userRoutes = require("./routes/user");
-const postsRoutes = require("./routes/posts");
+const userRoutes = require("./Routes/user");
+const postsRoutes = require("./Routes/posts");
 const commentsRoutes = require("./Routes/comments");
 
 const app = express();
@@ -18,7 +18,7 @@ app.use((req, res, next) => {
     "GET, POST, PUT, DELETE, PATCH, OPTIONS");
 
   next();
-});
+}); 
 
 app.use(express.json());
 app.use(helmet());
@@ -28,6 +28,6 @@ app.use(helmet());
 //Routes
 app.use("/api/auth", userRoutes);
 app.use("/api/posts", postsRoutes);
-app.use("/api/posts", commentsRoutes);
+app.use("/api/comments", commentsRoutes);
 
 module.exports = app;
