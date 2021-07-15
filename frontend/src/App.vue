@@ -1,14 +1,14 @@
 <template>
   <div id="app">
-    <Nav />
+    <h1>groupomania</h1>
+    <Nav/>
     <router-view/>
   </div>
 </template>
 
 <script>
 
-import Nav from './components/Nav.vue';
-
+import Nav from "../src/components/Nav.vue"
 export default {
   name: 'app',
   components: {

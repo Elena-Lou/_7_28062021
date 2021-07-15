@@ -19,9 +19,24 @@
 </template>
 
 <script>
+// import axios from "axios";
 
 export default {
     name: "Posts",
+
+    // methods: {
+    //     getAllPosts() {
+    //         axios.get(`http://localhost:3000/api/posts/`,
+    //         {
+    //             headers: {
+    //                 'content-type': 'application/json',
+    //                 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImFkbWluIjowLCJpYXQiOjE2MjYyNzc1NTIsImV4cCI6MTYyNjM2Mzk1Mn0.sLLuIK-UvJzNeWqtN6ioXXyuoRlL-HwEPbRk8665EVI'
+    //             }
+    //         }
+    //         )
+    //         .then(res => {this.posts = res.data} )
+    //     }
+    // }
     
 }
 </script>

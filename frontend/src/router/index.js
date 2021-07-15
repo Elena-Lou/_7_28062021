@@ -1,21 +1,59 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Home from '../views/Home.vue';
+import Signup from "../views/Signup.vue";
+import Post from "../views/SinglePost.vue";
+import Profile from "../views/Profile.vue";
+
+
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-]
+export default router
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
-export default router
+
+const routes = [
+    {
+      path: "/posts/",
+      name: "Home",
+      component: Home,
+    },
+
+    {
+      path: "/signup",
+      name: "signup",
+      component: Signup,
+    },
+
+    {
+      path: "/posts/:id",
+      name: "Post",
+      component: Post,
+    },
+
+     {
+      path: "/user/:id",
+      name: "Profile",
+      component: Profile
+    },
+];
+
+router.beforeEach((to, from, next) => {
+  const publicPages = ["/login", "/register", "/home"];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = localStorage.getItem("user");
+
+  // trying to access a restricted page + not logged in
+  // redirect to login page
+  if (authRequired && !loggedIn) {
+    next("/login");
+  } else {
+    next();
+  }
+});

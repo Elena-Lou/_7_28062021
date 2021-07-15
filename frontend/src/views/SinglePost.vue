@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import Post from "@/components/Post.vue";
-import Comments from "@/components/Comments.vue"
+import Post from "../components/Post.vue";
+import Comments from "../components/Comments.vue"
 
 export default {
     name: "SinglePost",
