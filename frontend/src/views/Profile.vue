@@ -44,7 +44,7 @@ deleteUser(){
             UserService.deleteProfile(userId)
             .then((res) => {
               this.deleteMessage = res.data.message;
-              setTimeout(function() {location.href = '/user/signup';}, 2000)
+              setTimeout(function() {location.href = '/signup';}, 2000)
               localStorage.removeItem('userToken');
             })
             .catch((e) => {
