@@ -3,53 +3,56 @@ import Home from '../views/Home.vue';
 import Signup from "../views/Signup.vue";
 import Post from "../views/SinglePost.vue";
 import Profile from "../views/Profile.vue";
+import Login from "../views/Login.vue";
 
+const routes = [
+  {
+    path: "/",
+    name: "Home",
+    component: Home,
+  },
 
+  {
+    path: "/login",
+    name: "login",
+    component: Login,
+  },
 
-export default router
+  {
+    path: "/signup",
+    name: "signup",
+    component: Signup,
+  },
+
+  {
+    path: "/posts/:id",
+    name: "Post",
+    component: Post,
+  },
+
+  {
+    path: "/user/:id",
+    name: "Profile",
+    component: Profile,
+  },
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
 });
 
+// router.beforeEach((to, from, next) => {
+//   const publicPages = ["/login", "/signup"];
+//   const authRequired = !publicPages.includes(to.path);
+//   const isLoggedIn = this.$store.getters.isLoggedIn
 
-const routes = [
-    {
-      path: "/posts/",
-      name: "Home",
-      component: Home,
-    },
 
-    {
-      path: "/signup",
-      name: "signup",
-      component: Signup,
-    },
+//   if (authRequired && !isLoggedIn) {
+//     next("/login");
+//   } else {
+//     next();
+//   }
+// });
 
-    {
-      path: "/posts/:id",
-      name: "Post",
-      component: Post,
-    },
-
-     {
-      path: "/user/:id",
-      name: "Profile",
-      component: Profile
-    },
-];
-
-router.beforeEach((to, from, next) => {
-  const publicPages = ["/login", "/register", "/home"];
-  const authRequired = !publicPages.includes(to.path);
-  const loggedIn = localStorage.getItem("user");
-
-  // trying to access a restricted page + not logged in
-  // redirect to login page
-  if (authRequired && !loggedIn) {
-    next("/login");
-  } else {
-    next();
-  }
-});
+export default router;

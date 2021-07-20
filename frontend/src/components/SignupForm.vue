@@ -3,69 +3,66 @@
         <form class="signup__form">
 
             <label for="name">Vous êtes :</label>
-            <input v-model="user.name" id="name" type="text" placeholder="Albert Camus" v-validate="required"/>
+            <input v-model="name" id="name" type="text" placeholder="Albert Camus" required/>
 
             <label for="email">Votre adresse email :</label>
-            <input name="email" v-model="user.email" id="email" type="text" placeholder="albertcamus@groupomania.com" v-validate="required"> 
+            <input name="email" v-model="email" id="email" type="email" placeholder="albertcamus@groupomania.com" required/> 
 
             <label for="password">Votre mot de passe :</label>
-            <input name="password" v-model="user.password" id="password" type="text" placeholder="Mot de passe" required/>
+            <input name="password" v-model="password" id="password" type="text" placeholder="Mot de passe" required/>
 
-            <button id="btn__signup" type="submit" @submit.prevent="handleSignup">S'inscrire</button>
+            <button id="btn__signup" type="submit" @click.prevent="signup">S'inscrire</button>
 
-            <div v-if="message" class="signup__form__message" role="alert">{{message}}</div>
         </form>
     </div>
 </template>
 
 <script>
-import User from '../models/user';
+
+import AuthService from "/services/auth.service";
 
 export default {
     name: "SignupForm",
 
     data() {
     return {
-      user: new User('', '', ''),
-      submitted: false,
-      successful: false,
-      message: ''
+      name:"",
+      email: "",
+      password: "",
     };
   },
-  computed: {
-    loggedIn() {
-      return this.$store.state.auth.status.loggedIn;
-    }
-  },
-  mounted() {
-    if (this.loggedIn) {
-      this.$router.push('/profile');
-    }
-  },
+
   methods: {
-    handleSignup() {
-      this.message = '';
-      this.submitted = true;
-      this.$validator.validate().then(isValid => {
-        if (isValid) {
-          this.$store.dispatch('auth/signup', this.user).then(
-            data => {
-              this.message = data.message;
-              this.successful = true;
-            },
-            error => {
-              this.message =
-                (error.response && error.response.data) ||
-                error.message ||
-                error.toString();
-              this.successful = false;
-            }
-          );
-        }
-      });
+    signup() {
+        AuthService.signup({
+          name: this.name,
+          email: this.email,
+          password: this.password
+        })
+
+        .then(res => {
+          this.$store.dispatch("LoginSuccess", res.token);
+
+          return res })
+
+        .then(res => {this.$store.dispatch("setUser", res.user);
+        console.log(res);
+           return res })
+        
+
+         .then(res => {
+          if (res.status === 201) { 
+            this.$router.push("/")
+
+          } else {
+            return this.$router.push("/login")
+          }
+        })
+        
+       .catch(error => {
+            console.log(error)})
     }
   }
+};
 
-
-}
 </script>

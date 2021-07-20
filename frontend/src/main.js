@@ -1,15 +1,9 @@
-import Vue from "vue";
-import vuex from "vuex";
+import { createApp } from "vue";
+import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import VeeValidate from "vee-validate";
 
-Vue.use(vuex)
-Vue.config.productionTip = false;
-Vue.use(VeeValidate);
-
-new Vue({
-  router,
-  store,
-  render: h => h(require ("./App"))
-}).$mount('#app')
+createApp(App)
+  .use(store)
+  .use(router)
+  .mount("#app");

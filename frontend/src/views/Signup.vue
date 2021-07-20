@@ -1,6 +1,6 @@
 <template>
   <div class="signup">
-      <h1>Bienvenue !</h1>
+      <h2>Bienvenue !</h2>
         <p>Veuillez renseigner les informations ci-dessous pour compléter votre profil et commencer à échanger avec vos collègues</p>
     <SignupForm/>
   </div>
@@ -14,6 +14,7 @@ export default {
   name: 'Signup',
   components: {
     SignupForm
-  },
+  }
+
 }
 </script>

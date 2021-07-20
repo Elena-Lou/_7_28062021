@@ -1,10 +1,12 @@
-export default function authHeader() {
-  let user = JSON.parse(localStorage.getItem("user"));
+export default function authHeaders(vm) {
+  console.log(this);
+  const token = vm.$store.state.token;
+  const user = vm.$store.state.user;
 
-  if (user && user.accessToken) {
+  if (user && token) {
     // for Node.js Express back-end
-    return { "x-access-token": user.accessToken };
+    return { "x-access-token": token };
   } else {
-    return {};
+    return { message: "l'authentification a échoué" };
   }
 }

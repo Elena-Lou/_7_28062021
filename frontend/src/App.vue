@@ -1,25 +1,24 @@
 <template>
   <div id="app">
-    <h1>groupomania</h1>
-    <Nav/>
-    <router-view/>
+    <Header />
+    <router-view />
   </div>
 </template>
 
 <script>
+import Header from "../src/components/Header.vue";
 
-import Nav from "../src/components/Nav.vue"
 export default {
-  name: 'app',
+  name: "app",
   components: {
-    Nav
-  }  
-}
+    Header,
+  },
+};
 </script>
 
 <style lang="scss">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;

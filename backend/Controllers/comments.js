@@ -12,6 +12,7 @@ exports.addComment = (req, res, next) => {
 
       } else {
         res.status(201).json({ message: "commentaire publié !" });
+        console.log(results);
       }
     }
   )};
