@@ -13,7 +13,7 @@ export default new Vuex.Store({
       state.sessionUserId = user;
     },
     SET_ADMIN(state, isAdmin) {
-      state.adminUser = isAdmin;
+      state.isAdmin = isAdmin;
     },
   },
   actions: {
