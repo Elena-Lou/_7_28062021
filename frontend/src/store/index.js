@@ -21,7 +21,7 @@ export default new Vuex.Store({
       commit("SET_USER_ID", sessionUserId);
     },
     setAdmin({ commit }, isAdmin) {
-      commit("SET_ADMIN_USER", isAdmin);
+      commit("SET_ADMIN", isAdmin);
     },
   },
   modules: {},
