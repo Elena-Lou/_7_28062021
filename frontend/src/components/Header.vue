@@ -18,11 +18,11 @@
 
 
           <li class="nav__list__item">
-            <router-link to="'/profile', params: {{ id: sessionUserId }}" id="user-profile" title="Voir ou modifier mon compte">Mon profil</router-link>
+            <router-link :to=" `/profile/${sessionUserId}` " id="profile" title="Voir ou modifier mon compte">Mon profil</router-link>
           </li>
 
           <li class="nav__list__item">
-             <button @click.prevent="deconnecter()"  href="#" title="Déconnexion">Se déconnecter</button>
+             <button @click.prevent="logout()"  href="#" title="Déconnexion">Se déconnecter</button>
           </li>
 
       </ul>
@@ -50,7 +50,7 @@ export default {
   },
   computed: mapState({
     sessionUserId : (state) => state.sessionUserId,
-    adminUser : (state) => state.isAdmin
+    isAdmin : (state) => state.isAdmin
   }),
   mounted () {
     const token = localStorage.getItem('userToken');
@@ -63,13 +63,13 @@ export default {
   methods: {
     getProfile(){
     let userId = this.sessionUserId;
-    let adminAcces = adminAcces;
     UserServices.getOneUser(userId)
       .then(res => {
         this.user = res.data[0];
       })
     },
-    deconnecter() {
+
+    logout() {
         localStorage.removeItem('userToken');
         location.href = '/';
     }
