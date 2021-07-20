@@ -7,7 +7,7 @@ exports.createPost = (req, res, next) => {
   const userId = decodedToken.userId;
 
   DB.query(
-    `INSERT INTO posts (post_title, post_text, post_date, user_id) VALUES ("${req.body.title}", "${req.body.text}", NOW(), ${userId})`,
+    `INSERT INTO posts (post_title, post_text, post_date, user_id) VALUES ("${req.body.post_title}", "${req.body.post_text}", NOW(), ${userId})`,
     (error, results, fields) => {
       if (error) {
         return res.status(400).json({ error });

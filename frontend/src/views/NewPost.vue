@@ -9,7 +9,7 @@
             <input name="post_title" v-model="post_title" id="new__post__title" type="text" placeholder="Titre de votre publication" required>
 
             <label for="new__post__content">Votre publication</label>
-            <textarea name="post_content" v-model="post_content" id="new__post__content"></textarea>
+            <textarea name="post_text" v-model="post_text" id="new__post__content"></textarea>
 
             <button id="new__post__btn" @click.prevent="createPost" type="submit">Publier</button>
         </form>
@@ -32,8 +32,8 @@ export default {
 
   data() {
     return {
-      title: "",
-      content: "",
+      post_title: "",
+      post_text: "",
     }
   },
 
