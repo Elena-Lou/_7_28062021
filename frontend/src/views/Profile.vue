@@ -13,25 +13,49 @@
 
 <script>
 
-import AuthService from "/services/auth.service";
+import UserService from "../services/user-services";
 
 export default {
     name: "Profile",
 
+mounted(){
+    this.getProfile();
+  },
 
-    methods: {
-      deleteProfile(){
-        const user_id = this.$route.params.id;
-         AuthService.deleteProfile(user_id) 
-            .then(() => {
-              this.$store.dispatch("deletePrifile", user_id)
+  methods: {
+    getProfile(){
+    const userId = this.$route.params.id;
+    UserService.getProfile(userId)
+      .then(res => {
+        this.user = res.data[0];
+        this.id = userId;
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+    },
+
+}, 
+
+deleteUser(){
+      if(window.confirm("Attention !! Vous êtes au point de supprimer votre compte définitivement !")){
+        const userId = this.$route.params.id;
+
+            UserService.deleteProfile(userId)
+            .then((res) => {
+              this.deleteMessage = res.data.message;
+              setTimeout(function() {location.href = '/user/signup';}, 2000)
+              localStorage.removeItem('userToken');
             })
-
-            .then(() => {
-              this.$router.push("/")
-            })        
+            .catch((e) => {
+              if (e.response.status === 500) {
+              this.deleteMessage = "La suppression de compte a échoué !";
+              setTimeout(function() {location.reload()}, 2000)
+              }
+            })
+          
+        }
       }
-
-    }
 }
+
 </script>

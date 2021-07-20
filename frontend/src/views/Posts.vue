@@ -6,17 +6,17 @@
       
         <div class="post__header">
           <router-link :to="`/posts/'${post.id}`">
-            <h2 class="post__title">{{ post.post_title }}</h2></router-link>
+            <h2 class="post__title">{{ posts.post_title }}</h2></router-link>
 
           <div class="post__info">
-            <span class="post__info__date">{{dateFormat(post.date)}}</span>
-            <span class="post__info__author">{{ post.user.name }}</span>
+            <span class="post__info__date">{{dateFormat(posts.date)}}</span>
+            <span class="post__info__author">{{ posts.user.name }}</span>
           </div>
         </div>
       </article>
 
       <div class="post__content">
-        <p class="post__text">{{ post.post_text }}</p>
+        <p class="post__text">{{ posts.post_text }}</p>
       </div>
 
   </div>
