@@ -5,9 +5,9 @@
       <img src="../assets/logo-left-white.png" alt="logo rouge Groupomania">
     </div>
 
-      <nav class="navbar">
+      <nav class="nav">
 
-          <ul class="navbar__list ">
+          <ul class="nav__list ">
 
           <li v-if="connected" class="nav__list__item">
            <router-link to="/posts" id="posts" title="Voir les publications">Les publications</router-link>
@@ -26,7 +26,7 @@
           </li>
 
           <li v-if="connected" class="nav__list__item">
-             <button @click.prevent="logout()" title="Déconnexion">Se déconnecter</button>
+             <button class="nav__list__btn" @click.prevent="logout()" title="Déconnexion">Se déconnecter</button>
           </li>
 
       </ul>
@@ -96,6 +96,7 @@ export default {
     align-items: center;
     background-color: #9b4747;
     color: white;
+    font-size: 1.2em;
 
   }
 
@@ -105,7 +106,7 @@ export default {
 
   }
 
-  .navbar {
+  .nav {
     width: 70%;
 
     &__list {
@@ -113,14 +114,17 @@ export default {
       width: 100%;
       justify-content: space-evenly;
       list-style: none;
+      align-items: center;
 
-      &__link {
-      text-decoration: none;
+      &__btn {
+        padding: 20px;
+        font-size: 1.1em;
+        color: #9b4747;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
       }
-
     }
-
-
   }
 
 </style>
