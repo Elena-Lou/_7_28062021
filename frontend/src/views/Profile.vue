@@ -6,7 +6,7 @@
             <p class="profile__email">Votre adresse email : {{ user.email }}</p>
         </div>
 
-        <button class="delete__profile" @click.prevent="deleteProfile()">Supprimer votre compte</button>
+        <button class="profile__btn__delete" @click.prevent="deleteProfile()">Supprimez votre compte</button>
 
     </div>
 </template>
@@ -64,3 +64,17 @@ mounted(){
 }
 
 </script>
+
+<style lang="scss" scoped>
+
+  
+    .profile__btn__delete {
+      border-radius: 10px;
+      padding: 5px;
+      color: red;
+      margin-top: 30px;
+      font-size: 1.3em;
+      cursor: pointer;
+    }
+
+</style>
