@@ -1,6 +1,7 @@
 const express = require("express");
 
 const helmet = require("helmet");
+const cors = require("cors");
 
 const userRoutes = require("./Routes/user");
 const postsRoutes = require("./Routes/posts");
@@ -12,7 +13,7 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "Origin, message, X-Requested-With, Content, Accept, Content-Type, Authorization"
+    "Origin, Message, X-Requested-With, Content, Accept, Content-Type, Authorization"
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
@@ -24,6 +25,7 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 app.use(helmet());
+app.use(cors());
 
 //Routes
 app.use("/api/auth", userRoutes);

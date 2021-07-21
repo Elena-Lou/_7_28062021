@@ -6,56 +6,61 @@
             <p class="profile__email">Votre adresse email : {{ user.email }}</p>
         </div>
 
-        <button class="delete__profile" @click.prevent="deleteProfile">Supprimer votre compte</button>
+        <button class="delete__profile" @click.prevent="deleteProfile()">Supprimer votre compte</button>
 
     </div>
 </template>
 
 <script>
 
-import UserService from "../services/user-services";
+import UserService from "/services/user-services";
 
 export default {
     name: "Profile",
 
+data() {
+    return{
+     name: "",
+      email: "",
+      user: {},
+    }
+  },
+    
 mounted(){
     this.getProfile();
   },
 
   methods: {
     getProfile(){
-    const userId = this.$route.params.id;
-    UserService.getProfile(userId)
+    const id = this.$route.params.id;
+    UserService.getProfile(id)
       .then(res => {
         this.user = res.data[0];
-        this.id = userId;
+        this.id = id;
       })
       .catch((e) => {
         console.log(e);
       })
     },
 
+    deleteProfile(){
+     
+        const id = this.$route.params.id;
+
+            UserService.deleteProfile(id)
+            .then(
+              localStorage.removeItem('userToken')
+            )
+      .catch((e) => {
+        console.log(e);
+      })
+          
+        
+      }
+
 }, 
 
-deleteUser(){
-      if(window.confirm("Attention !! Vous êtes au point de supprimer votre compte définitivement !")){
-        const userId = this.$route.params.id;
 
-            UserService.deleteProfile(userId)
-            .then((res) => {
-              this.deleteMessage = res.data.message;
-              setTimeout(function() {location.href = '/signup';}, 2000)
-              localStorage.removeItem('userToken');
-            })
-            .catch((e) => {
-              if (e.response.status === 500) {
-              this.deleteMessage = "La suppression de compte a échoué !";
-              setTimeout(function() {location.reload()}, 2000)
-              }
-            })
-          
-        }
-      }
 }
 
 </script>

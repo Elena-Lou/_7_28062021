@@ -20,15 +20,12 @@
 </template>
 
 <script>
-import PostService from "../services/post-services";
+import PostService from "/services/post-services";
 
 import {mapState} from "vuex";  
                     // Importation données de Vuex store
 export default {
   name: "NewPost",
-  components: {
-    Header
-  },
 
   data() {
     return {

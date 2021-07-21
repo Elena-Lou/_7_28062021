@@ -3,7 +3,7 @@ import axios from "axios";
 const token = localStorage.getItem("userToken");
 
 const commonConfig = {
-  baseURL: "http://localhost:3000/api/",
+  baseURL: "http://localhost:3000/api/auth",
 };
 
 const authUser = axios.create({ ...commonConfig });
@@ -17,11 +17,11 @@ authUser.interceptors.request.use(function(config) {
 export default {
   authUser,
   signup(data) {
-    return authUser.post("auth/signup", data);
+    return authUser.post("/signup", data);
   },
 
   login(data) {
-    return authUser.post("auth/login", data);
+    return authUser.post("/login", data);
   },
 
   getProfile(id) {

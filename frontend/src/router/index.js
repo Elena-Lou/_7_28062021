@@ -1,5 +1,5 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
+
 import Posts from "../views/Posts.vue";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
@@ -8,23 +8,15 @@ import SinglePost from "../views/SinglePost.vue";
 import NewPost from "../views/NewPost.vue";
 import Profile from "../views/Profile.vue";
 
-Vue.use(VueRouter);
 
-const router = new VueRouter({
-  mode: "history",
-  routes: [
+
+const routes = [
     {
       path: "/",
       name: "Home",
       component: Home,
-      beforeEnter: (to, from, next) => {
-        const token = localStorage.getItem("userToken");
-        if (!token) {
-          next("/login");
-        }
-        next();
-      },
     },
+
     {
       path: "/posts",
       name: "Posts",
@@ -37,16 +29,19 @@ const router = new VueRouter({
         next();
       },
     },
+
     {
       path: "/login",
       name: "Login",
       component: Login,
     },
+
     {
       path: "/signup",
       name: "Signup",
       component: Signup,
     },
+
     {
       path: "/posts/:id",
       name: "SinglePost",
@@ -59,6 +54,7 @@ const router = new VueRouter({
         next();
       },
     },
+
     {
       path: "/post",
       name: "NewPost",
@@ -71,6 +67,7 @@ const router = new VueRouter({
         next();
       },
     },
+    
     {
       path: "/user/:id",
       name: "Profile",
@@ -83,7 +80,13 @@ const router = new VueRouter({
         next();
       },
     },
-  ],
+  ];
+
+
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes,
 });
+
 
 export default router;

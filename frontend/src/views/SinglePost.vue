@@ -2,7 +2,7 @@
     <div class="post__header">
        <h2 class="post__title">{{ post.post_title }}</h2>
             <span class="post__date"> {{dateFormat(post.date)}}</span>
-            <span class="post__author">{{ post.user.name }}</span>
+            <span class="post__author">{{ post.user }}</span>
 
             <div class="post__content">
                 <p class="post__text">{{ post.post_text }}</p>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import PostService from "../services/post-services";
+import PostService from "/services/post-services";
 import { mapState } from "vuex";
 
 export default {
@@ -44,7 +44,7 @@ export default {
         .then(res => {
           this.post = res.data[0];
           this.id = res.data[0].postAuthorId;
-          this.adminAcces = res.data[0].postAdmin;
+          this.adminAccess = res.data[0].postAdmin;
         })
         .catch(error => {
           console.log( error )

@@ -1,35 +1,37 @@
 <template>
   <div class="header">
 
-      <nav>
+    <div class="logo">
+      <img src="../assets/logo-left-white.png" alt="logo rouge Groupomania">
+    </div>
+
+      <nav class="navbar">
 
           <ul class="navbar__list ">
 
-          <li class="nav__list__item">
+          <li v-if="connected" class="nav__list__item">
            <router-link to="/posts" id="posts" title="Voir les publications">Les publications</router-link>
 
           </li>
 
 
-          <li class="nav__list__item">
-            <router-link to="/post" id="newpost" title="Créez une publication">Créer une publication</router-link>
+          <li v-if="connected" class="nav__list__item">
+            <router-link to="/post" class="nav__list__link" id="newpost" title="Créez une publication">Créer une publication</router-link>
           </li>
 
 
 
-          <li class="nav__list__item">
-            <router-link :to=" `/profile/${sessionUserId}` " id="profile" title="Voir ou modifier mon compte">Mon profil</router-link>
+          <li v-if="connected" class="nav__list__item">
+            <router-link :to=" `/user/${sessionUserId}`" id="profile" class="nav__list__link" title="Voir ou modifier mon compte">Mon profil</router-link>
           </li>
 
-          <li class="nav__list__item">
-             <button @click.prevent="logout()"  href="#" title="Déconnexion">Se déconnecter</button>
+          <li v-if="connected" class="nav__list__item">
+             <button @click.prevent="logout()" title="Déconnexion">Se déconnecter</button>
           </li>
 
       </ul>
     </nav>
 
-
-      <div class="role" v-if="isAdmin === 1">Modérateur</div>    
       
  
   </div>
@@ -37,33 +39,42 @@
 
 <script>
 
-import jwt from 'jsonwebtoken';
 import {mapState} from "vuex";
-import UserServices from '../services/user-services';
+import UserServices from "/services/user-services";
+
 export default {
   name: "Header",
   
   data() {
     return {
       user: [],
+      connected: true
     }
   },
   computed: mapState({
     sessionUserId : (state) => state.sessionUserId,
     isAdmin : (state) => state.isAdmin
   }),
-  mounted () {
-    const token = localStorage.getItem('userToken');
-    const decodedToken = jwt.decode(token);   
-    const sessionUserId = decodedToken.userId;
-    const admin = decodedToken.admin;
-    this.$store.dispatch('setAuthUser', sessionUserId);
-    this.$store.dispatch('setAdmin', admin);
+
+  created(){
+    this.checkConnected()
   },
+  
   methods: {
+    checkConnected(){
+      const token = localStorage.getItem("userToken");
+      if(!token){
+        this.connected = false;
+        console.log("utilisateur non connecté");
+      } else if(token) {
+        this.connected = true;
+        console.log("utilisateur connecté");
+      }
+    },
+
     getProfile(){
     let userId = this.sessionUserId;
-    UserServices.getOneUser(userId)
+    UserServices.getProfile(userId)
       .then(res => {
         this.user = res.data[0];
       })
@@ -76,3 +87,40 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  .header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #9b4747;
+    color: white;
+
+  }
+
+  .header img {
+    width: 100%;
+    height: 170px;
+
+  }
+
+  .navbar {
+    width: 70%;
+
+    &__list {
+      display: flex;
+      width: 100%;
+      justify-content: space-evenly;
+      list-style: none;
+
+      &__link {
+      text-decoration: none;
+      }
+
+    }
+
+
+  }
+
+</style>

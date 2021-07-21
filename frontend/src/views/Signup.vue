@@ -12,7 +12,7 @@
             <label for="password">Votre mot de passe :</label>
             <input name="password" v-model="password" id="password" type="text" placeholder="Mot de passe" required/>
 
-            <button id="btn__signup" type="submit" @click.prevent="signup">S'inscrire</button>
+            <button id="btn__signup" type="submit" @click.prevent="signup()">S'inscrire</button>
 
             <div class="btn-signup-page">
             <router-link to="/login" class="connexion btn btn-secondary mx-5" title="Se connecter">Vous avez déjà un compte ? Connectez-vous !</router-link>
@@ -24,7 +24,7 @@
 
 <script>
 
-import UserServices from "../services/user-services.js"
+import UserServices from "/services/user-services.js"
 
 export default {
   name: 'Signup',

@@ -6,17 +6,17 @@
       
         <div class="post__header">
           <router-link :to="`/posts/'${post.id}`">
-            <h2 class="post__title">{{ posts.post_title }}</h2></router-link>
+            <h2 class="post__title">{{ post.post_title }}</h2></router-link>
 
           <div class="post__info">
-            <span class="post__info__date">{{dateFormat(posts.date)}}</span>
-            <span class="post__info__author">{{ posts.user.name }}</span>
+            <span class="post__info__date">{{post.date}}</span>
+            <span class="post__info__author">{{ post.user}}</span>
           </div>
         </div>
       </article>
 
       <div class="post__content">
-        <p class="post__text">{{ posts.post_text }}</p>
+        <p class="post__text">{{ post.post_text }}</p>
       </div>
 
   </div>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import PostService from "../services/post-services";
+import PostService from "/services/post-services";
 
 export default {
     name: "Posts",
@@ -42,7 +42,7 @@ export default {
             posts : []                     
         }
     },
-    mounted() { 
+    beforeMount() { 
         this.getAllPosts();
     },
     methods: {
@@ -50,6 +50,7 @@ export default {
             PostService.getAllPosts()
             .then(res => {
                 this.posts = res.data;
+                console.log(res.data);
             })
             .catch((e) => {
                 if (e.response.status === 400) {
@@ -57,11 +58,11 @@ export default {
                 }
             })
         },
-        dateFormat(date){
-        const event = new Date(date);
-        const data = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
-        return event.toLocaleDateString('fr-FR', data);
-        }
+        // dateFormat(date){
+        // const event = new Date(date);
+        // const data = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+        // return event.toLocaleDateString('fr-FR', data);
+        // }
     }
 }
 </script>
