@@ -39,10 +39,10 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  font-size: 1.5em;
 
   @media all and (min-width: 768px) { 
-    flex-direction: row;
-    
+    flex-direction: row;  
   }
 }
 </style>

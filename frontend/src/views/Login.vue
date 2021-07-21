@@ -11,13 +11,13 @@
             <label class="login__form__label" for="password">Votre mot de passe :</label>
             <input class="login__form__input" name="password" v-model="password" id="password" type="text" placeholder="Mot de passe" required/>
 
-            <button id="btn__login" @click.prevent="login()" type="submit">Se connecter</button>
+            <button class="btn__login" @click.prevent="login()" type="submit">Se connecter</button>
 
         </form>
 
             <div class="signup__link">
                 <p>Vous n'avez pas encore de compte ?
-                  <router-link to="/signup" id="signup" title="Créer un compte">S'inscrire</router-link>
+                  <router-link to="/signup" id="signup" title="Créer un compte">Inscrivez-vous !</router-link>
                 </p>
             </div>
     </div>
@@ -61,14 +61,18 @@ export default {
 <style lang="scss" scoped>
 
   .login__form {
-    width: 70%;
+    width: 100%;
     margin: auto;
     display: flex;
     flex-direction: column;
+    @media all and (min-width: 768px) {
+      width: 60%
+    }
 
     &__label {
       color: rgba(0, 0, 0, .5);
       margin: 10px;
+      font-weight: bold;
     }
 
     &__input {
@@ -76,38 +80,28 @@ export default {
       padding: 10px;
       margin-bottom: 15px;
       text-align: center;
+      width: 80%;
+      margin: auto;
     }
   }
 
 
-    #login-btn{
-        padding: 10px;
-        font-size: 1.1rem;
-        color: white;
-        background-color: rgb(43, 42, 42);
-        border: none;
-        border-radius: 10px;
-        transition-duration: 0.2s;
-        cursor: pointer;
-    }
-    #login-btn:hover{
-        transform: scale(1.025);
-    }
+  .btn__login {
+      width: 30%;
+      margin: 20px auto;
+      padding: 10px;
+      font-size: 1.1rem;
+      color: white;
+      background-color: #9b4747;
+      border: none;
+      border-radius: 10px;
+      transition-duration: 0.25s;
+      cursor: pointer;
 
-    label{
-        font-size: 0.8rem;
-        font-weight: bold;
-        color: rgb(109, 109, 109);
-        text-align: left;
-        border: 0;
-        clip: rect(0 0 0 0);
-        height: 1px;
-        margin: -1px;
-        overflow: hidden;
-        padding: 0;
-        position: absolute;
-        width: 1px;
-    }
+      &:hover {
+        transform: scale(1.05);
+      }
+  }
 
 </style>
 
