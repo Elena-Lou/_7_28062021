@@ -5,34 +5,29 @@
       <img src="../assets/logo-left-white.png" alt="logo rouge Groupomania">
     </div>
 
-      <nav class="nav">
+    <nav class="nav">
 
-          <ul class="nav__list ">
+      <ul class="nav__list ">
 
-          <li v-if="connected" class="nav__list__item">
-           <router-link to="/posts" id="posts" title="Voir les publications">Les publications</router-link>
+        <li v-if="connected" class="nav__list__item">
+          <router-link to="/posts" id="posts" title="Voir les publications">Les publications</router-link>
+        </li>
 
-          </li>
+        <li v-if="connected" class="nav__list__item">
+          <router-link to="/post" class="nav__list__link" id="newpost" title="Créez une publication">Créer une publication</router-link>
+        </li>
 
+        <li v-if="connected" class="nav__list__item">
+          <router-link :to=" `/user/${sessionUserId}`" id="profile" class="nav__list__link" title="Voir ou modifier mon compte">Mon profil</router-link>
+        </li>
 
-          <li v-if="connected" class="nav__list__item">
-            <router-link to="/post" class="nav__list__link" id="newpost" title="Créez une publication">Créer une publication</router-link>
-          </li>
-
-
-
-          <li v-if="connected" class="nav__list__item">
-            <router-link :to=" `/user/${sessionUserId}`" id="profile" class="nav__list__link" title="Voir ou modifier mon compte">Mon profil</router-link>
-          </li>
-
-          <li v-if="connected" class="nav__list__item">
-             <button class="nav__list__btn" @click.prevent="logout()" title="Déconnexion">Se déconnecter</button>
-          </li>
+        <li v-if="connected" class="nav__list__item">
+          <button class="nav__list__btn" @click.prevent="logout()" title="Déconnexion">Se déconnecter</button>
+        </li>
 
       </ul>
-    </nav>
 
-      
+    </nav>
  
   </div>
 </template>
@@ -65,10 +60,10 @@ export default {
       const token = localStorage.getItem("userToken");
       if(!token){
         this.connected = false;
-        console.log("utilisateur non connecté");
+        console.log("non connecté");
       } else if(token) {
         this.connected = true;
-        console.log("utilisateur connecté");
+        console.log("connecté");
       }
     },
 
@@ -89,6 +84,7 @@ export default {
 </script>
 
 <style lang="scss">
+
   .header {
     width: 100%;
     display: flex;
@@ -97,13 +93,11 @@ export default {
     background-color: #9b4747;
     color: white;
     font-size: 1.2em;
-
   }
 
   .header img {
     width: 100%;
     height: 170px;
-
   }
 
   .nav {
