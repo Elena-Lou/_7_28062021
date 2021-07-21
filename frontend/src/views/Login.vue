@@ -15,10 +15,8 @@
 
         </form>
 
-            <div class="signup__link">
-                <p>Vous n'avez pas encore de compte ?
-                  <router-link to="/signup" id="signup" title="Créer un compte">Inscrivez-vous !</router-link>
-                </p>
+            <div class="login__form__router">
+                <router-link class="login__form__link" to="/signup" id="signup" title="Créer un compte">Vous n'avez pas encore de compte ? Inscrivez-vous !</router-link>
             </div>
     </div>
 
@@ -70,37 +68,48 @@ export default {
     }
 
     &__label {
-      color: rgba(0, 0, 0, .5);
-      margin: 10px;
+      color: #677a8d;
+      margin: 30px auto 10px;
       font-weight: bold;
     }
 
     &__input {
-      font-size: 1.05rem;
-      padding: 10px;
-      margin-bottom: 15px;
+      font-size: 1.1em;
+      padding: 15px;
+      border-radius: 5px;
       text-align: center;
       width: 80%;
       margin: auto;
+
+        @media all and (min-width: 768px) {
+          width: 60%
+        }
     }
+
+    &__link {
+        color: #677a8d;
+        padding: 50px 10px;
+        font-style: italic;
+        font-size: 1.15em;
+      }
   }
 
 
   .btn__login {
-      width: 30%;
-      margin: 20px auto;
-      padding: 10px;
-      font-size: 1.1rem;
-      color: white;
-      background-color: #9b4747;
-      border: none;
-      border-radius: 10px;
-      transition-duration: 0.25s;
-      cursor: pointer;
+    width: 40%;
+    margin: 20px auto;
+    padding: 10px;
+    font-size: 1.1em;
+    color: white;
+    background-color: #9b4747;
+    border: none;
+    border-radius: 10px;
+    transition-duration: 0.25s;
+    cursor: pointer;
 
-      &:hover {
-        transform: scale(1.05);
-      }
+    &:hover {
+      transform: scale(1.05);
+    }
   }
 
 </style>
