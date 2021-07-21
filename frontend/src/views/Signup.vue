@@ -1,5 +1,7 @@
 <template>
   <div class="signup">
+    <h1>Bienvenue chez Groupomania !</h1>
+      <p>Créez un profil et commencez à partager des publications</p>
 
     <form class="signup__form">
 
