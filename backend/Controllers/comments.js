@@ -6,13 +6,11 @@ exports.addComment = (req, res, next) => {
   DB.query(
     `INSERT INTO comments (comment_text, comment_date, post_id, user_id) VALUES ( "${req.body.text}", NOW(), ${req.params.post_id}, ${req.body.user_id})`,
     (error, results, fields) => {
-      console.log(req.body);
       if (error) {
         return res.status(400).json({ error });
 
       } else {
         res.status(201).json({ message: "commentaire publié !" });
-        console.log(results);
       }
     }
   )};

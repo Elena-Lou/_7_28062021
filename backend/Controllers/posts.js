@@ -23,7 +23,6 @@ exports.createPost = (req, res, next) => {
       if (error) {
         return res.status(400).json({ error });
       } else {
-        console.log(req.body);
         return res.status(201).json({ message: "publiée !" });
       }
     }
@@ -50,7 +49,6 @@ exports.getAllPosts = (req, res, next) => {
     if (error) {
       return res.status(400).json({ error });
     } else {
-      console.log(results); 
       res.status(200).json(results);
     }
   });
