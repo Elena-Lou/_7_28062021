@@ -51,10 +51,9 @@ export default {
           
           .then(res => {
             if (res.status === 201) {
-            console.log(res.data);
-            this.$router.push("/login");
+              this.$router.push("/login");
             } else {
-              console.log("erreur");
+                console.log("erreur");
             }
           })
 

@@ -2,6 +2,7 @@ const mysql = require("mysql");
 const dotenv = require("dotenv");
 dotenv.config();
 
+//Database connection
 const connect = {
   host: process.env.MYSQL_HOST,
 
@@ -12,6 +13,7 @@ const connect = {
   database: process.env.MYSQL_DATABASE
 };
 
+//variable to be called for db queries
 const DB = mysql.createConnection(connect);
 
 DB.connect(function (err) {

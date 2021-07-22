@@ -1,6 +1,7 @@
 import axios from "axios";
 import Store from "../src/store/index";
 
+//variable to reuse for every axios call
 const commonConfig = {
   baseURL: "http://localhost:3000/api/auth",
 };

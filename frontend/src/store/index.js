@@ -1,36 +1,37 @@
-// import Vue from "vue";
 import Vuex from "vuex";
 
-// Vue.use(Vuex);
-
 export default new Vuex.Store({
+  //user data needed throughout website and token
   state: {
     user: {
       id: null,
       name: null,
       email: null,
-      admin: null
+      admin: null,
     },
-    token: null
+    token: null,
   },
 
   mutations: {
+    //sets {user} into localstorage as a string
     SET_USER(state, user) {
       state.user = user;
-      localStorage.setItem("user", JSON.stringify(user))
+      localStorage.setItem("user", JSON.stringify(user));
     },
+    //sets {user} into localstorage as a string
     SET_TOKEN(state, token) {
       state.token = token;
       localStorage.setItem("token", JSON.stringify(token));
     },
+    //parses token and user data and stores them
     INITIALIZE_STORE(state) {
-      if(localStorage.getItem("token")) {
+      if (localStorage.getItem("token")) {
         state.token = JSON.parse(localStorage.getItem("token"));
-      } 
-      if(localStorage.getItem("user")) {
-        state.user = JSON.parse(localStorage.getItem("user"))
       }
-    }
+      if (localStorage.getItem("user")) {
+        state.user = JSON.parse(localStorage.getItem("user"));
+      }
+    },
   },
 
   actions: {
@@ -43,14 +44,14 @@ export default new Vuex.Store({
     },
   },
   modules: {},
-
+//getters to be called and accessed throughout Vue
   getters: {
     token(state) {
-      return state.token
+      return state.token;
     },
 
     user(state) {
-      return state.user
-    }
-  }
+      return state.user;
+    },
+  },
 });

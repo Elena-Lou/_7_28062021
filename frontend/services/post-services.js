@@ -1,8 +1,7 @@
 import axios from "axios";
-import Store from "../src/store/index"
+import Store from "../src/store/index" //use of store to get token 
 
-
-
+//variable to reuse for every axios call
 const commonConfig = {
   baseURL: "http://localhost:3000/api/",
 };
@@ -17,6 +16,7 @@ export default {
     "Authorization": `Bearer ${token}`},
     });
   },
+
   getOnePost(id) {
     const token = Store.getters.token;
     return PostService.get('/posts/' + id, {
@@ -24,6 +24,7 @@ export default {
     "Authorization": `Bearer ${token}`},
     });
   },
+
   getAllPosts() {
     const token = Store.getters.token;
     console.log(token);

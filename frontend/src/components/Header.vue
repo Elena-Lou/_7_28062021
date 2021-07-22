@@ -38,14 +38,14 @@ import {mapState} from "vuex";
 
 export default {
   name: "Header",
- 
+  //checks token and {user} stored 
   computed: mapState({
     user: (state) => state.user,
     token : (state) => state.token
   }),
 
   methods: {
-  
+    //sets store states to null and redirects towards login page
     logout() {
         this.$store.dispatch("setAuthUser", {});
         this.$store.dispatch("setToken", null);

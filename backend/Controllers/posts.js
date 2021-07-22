@@ -1,6 +1,7 @@
 const DB = require("../database_connection");
 const jwt = require("jsonwebtoken");
 
+//check whether user is admin
 function isAdmin(userId) {
   return new Promise((resolve) => {
     const admin = DB.query(
@@ -10,6 +11,7 @@ function isAdmin(userId) {
   })
 };
 
+//get user id from token to include into posts table
 exports.createPost = (req, res, next) => {
   const token = req.headers.authorization.split(" ")[1];
   const decodedToken = jwt.verify(token, process.env.TOKEN);
@@ -28,6 +30,7 @@ exports.createPost = (req, res, next) => {
   );
 };
 
+//one post with it's id
 exports.getOnePost = (req, res, next) => {
   DB.query(
     `SELECT * FROM posts WHERE posts.id = ${req.params.id}`,
@@ -41,6 +44,7 @@ exports.getOnePost = (req, res, next) => {
   );
 };
 
+//joint query to get post's user's name
 exports.getAllPosts = (req, res, next) => {
   DB.query(`SELECT users.name, posts.id, posts.userId, posts.title, posts.text, posts.date AS date FROM users INNER JOIN posts ON users.id = posts.userId ORDER BY date DESC`, (error, results) => {
     if (error) {
@@ -52,6 +56,7 @@ exports.getAllPosts = (req, res, next) => {
   });
 };
 
+//get the post's author(user) id
 exports.deletePost = async (req, res, next) => {
   const userPostId = DB.query(
     `SELECT userId FROM posts WHERE posts.id = ${req.params.id}`,
@@ -62,14 +67,14 @@ exports.deletePost = async (req, res, next) => {
     }
   );
 
-  //userId a definir a partir du token
   const token = req.headers.authorization.split(" ")[1];
   const decodedToken = jwt.verify(token, process.env.TOKEN);
   const userId = decodedToken.userId;
 
+  //needs to wait for isAdmin() to be completed
   let admin = await isAdmin(userId);
 
-  console.log("bidule", admin);
+  //check if current user is the author OR if is admin
   if (userPostId == userId || admin) {
     DB.query(
       `DELETE FROM posts WHERE posts.id = ${req.params.id}`,

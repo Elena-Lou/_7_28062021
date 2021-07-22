@@ -32,7 +32,7 @@ export default {
       text: "",
     }
   },
-
+  //gets user ID from the {user} stored
   computed: mapState({
     user: (state) => state.user.id, 
   }),
@@ -46,17 +46,16 @@ export default {
       };
 
       let postData = (userId, data);
-      console.log(data);
           
       PostService.createPost(postData)
-      .then(res => {
-        if (res.status === 201) { 
-          setTimeout( () => this.$router.push("/posts"), 1500);
-        } else {
-          console.log("erreur d'envoi");
-        }
-      })
-      .catch(e => {
+        .then(res => {
+          if (res.status === 201) { 
+            setTimeout( () => this.$router.push("/posts"), 1500);
+          } else {
+            console.log("erreur d'envoi");
+          }
+        })
+        .catch(e => {
           console.log(e);
       })
     }

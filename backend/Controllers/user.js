@@ -7,7 +7,7 @@ const DB = require("../database_connection");
 const dotenv = require("dotenv");
 dotenv.config();
 
-//creation d'utilisateur et cryptage du mot de passe
+//create user, mask email for RGPD and encrypt password
 exports.signup = (req, res, next) => {
   DB.query(
     `SELECT * FROM users WHERE email = "${req.body.email}"`,
@@ -38,7 +38,7 @@ exports.signup = (req, res, next) => {
   );
 };
 
-//comparaison des mots de passe cryptés, encodage de l'userId dans un jeton
+//compares emails and encrypted passwords
 exports.login = (req, res, next) => {
   const email = maskData.maskEmail2(req.body.email);
   DB.query(
@@ -58,7 +58,7 @@ exports.login = (req, res, next) => {
             if (!valid) {
               return res.status(401).json({ message: "mot de passe erronné" });
             }
-
+            //sends user's data and encrypts user id and admin role into a token
             res.status(200).json({
               user: {...results[0]},
               token: jwt.sign(
@@ -79,7 +79,7 @@ exports.login = (req, res, next) => {
   );
 };
 
-//acces au profil utlisateur
+//accesses user's profile
 exports.getProfile = (req, res, next) => {
   DB.query(
     `SELECT * FROM users WHERE users.id = ${req.params.id}`,
@@ -93,7 +93,7 @@ exports.getProfile = (req, res, next) => {
   );
 };
 
-//suppression du profil utilisateur
+//deletes user's profile
 exports.deleteProfile = (req, res, next) => {
   DB.query(
     `DELETE FROM users WHERE users.id = ${req.params.id}`,

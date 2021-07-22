@@ -39,7 +39,7 @@ export default {
 
     data(){
         return {
-            posts : []                     
+          posts : []   //all the posts are into an array, each post accessed with "for in"                   
         }
     },
     
@@ -49,13 +49,12 @@ export default {
     methods: {
         getAllPosts(){ 
             PostService.getAllPosts()
-            .then(res => {
+              .then(res => {
                 this.posts = res.data;
-                console.log(res.data);
             })
             .catch((e) => {
                 if (e.response.status === 400) {
-                console.log("Il n'y a pas de publications");
+                  console.log("Il n'y a pas de publications");
                 }
             })
         },

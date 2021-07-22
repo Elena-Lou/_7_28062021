@@ -30,36 +30,37 @@ export default {
   mounted() {                                    
     this.getOnePost();
   },
-  computed: mapState({
+  computed: mapState({ //accesses user's id and admin role through {user} stored
     user : (state) => state.user,
-  
-  }),
+    }),
   
   methods: {
+
     getOnePost(){
         const postId = this.$route.params.id;
         PostService.getOnePost(postId)
-        .then(res => {
-          this.post = res.data[0];
-          this.id = res.data[0].userId;
-        })
-
-        .catch(error => {
-          console.log( error )
+          .then(res => {
+            this.post = res.data[0];
+            this.id = res.data[0].userId;
+          })
+          .catch(error => {
+           console.log( error )
         })
     },
+
     deletePost(){
       let postId = this.$route.params.id;
 
       PostService.deletePost(postId)
-      .then((res) => {
-        this.post = res.data[0];
-        this.$router.push({ path: '/posts'});
+        .then((res) => {
+          this.post = res.data[0];
+          this.$router.push({ path: '/posts'});
       })
-      .catch(error => {
+        .catch(error => {
           console.log( error )
       })
     },
+
     dateFormat(date){
       const event = new Date(date);
       const data = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };

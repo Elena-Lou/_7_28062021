@@ -18,8 +18,7 @@ import {mapState} from "vuex";
 
 export default {
     name: "Profile",
-
-    
+//user's data accessed through {user} stored
   computed: mapState({
     user: (state) => state.user,
   }),
@@ -28,12 +27,12 @@ export default {
     deleteProfile(){
       const id = this.user.id;
 
-            UserService.deleteProfile(id)
-              .then( () => {
-                this.$store.dispatch("setAuthUser", {})
-                this.$store.dispatch("setToken", null)
-                this.$router.push("/signup")
-              })
+      UserService.deleteProfile(id)
+        .then( () => { //empties store and redirects towards signup page
+          this.$store.dispatch("setAuthUser", {})
+          this.$store.dispatch("setToken", null)
+          this.$router.push("/signup")
+        })
       .catch((e) => {
         console.log(e);
       })

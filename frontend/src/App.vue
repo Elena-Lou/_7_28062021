@@ -1,13 +1,14 @@
 <template>
   <div id="app">
-    <Header />
+    <Header /> 
     <router-view />
   </div>
 </template>
 
 <script>
-import Header from "../src/components/Header.vue";
+import Header from "../src/components/Header.vue"; 
 
+//header to appear on every page
 export default {
   name: "app",
   components: {

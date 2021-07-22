@@ -8,8 +8,7 @@ import SinglePost from "../views/SinglePost.vue";
 import NewPost from "../views/NewPost.vue";
 import Profile from "../views/Profile.vue";
 
-
-
+//token checks before accessing each route which requires auth, redirection towards login page 
 const routes = [
   {
     path: "/",
@@ -77,7 +76,6 @@ const routes = [
     },
   },
 ];
-
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

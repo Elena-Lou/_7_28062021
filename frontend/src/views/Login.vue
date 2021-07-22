@@ -33,7 +33,7 @@ export default {
           password : ""
         }
     },
-    mounted() {                                       
+    mounted() { //makes sure there is no data stored                             
       this.$store.dispatch("setAuthUser", {});
       this.$store.dispatch("setToken", null);  
     },
@@ -44,8 +44,7 @@ export default {
           email: this.email,
           password: this.password
         })
-      .then((res) => {
-          console.log(res);
+      .then((res) => { //sets the data {user} and token into the store to be accessed throughout user's session, redirection towards posts
         this.$store.dispatch("setAuthUser", res.data.user);
         this.$store.dispatch("setToken", res.data.token);  
         this.$router.push('/posts');                          

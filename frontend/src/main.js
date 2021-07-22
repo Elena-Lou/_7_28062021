@@ -5,7 +5,7 @@ import store from "./store";
 
 
 createApp({...App, beforeCreate(){
-  this.$store.commit("INITIALIZE_STORE")
+  this.$store.commit("INITIALIZE_STORE") //call mutation to store token and user data into localstorage (instead od sessionstorage)
 }})
   .use(store)
   .use(router)
