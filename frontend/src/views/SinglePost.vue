@@ -1,4 +1,6 @@
 <template>
+  <div class="post">
+
     <div class="post__header">
        <h2 class="post__title">{{ post.title }}</h2>
             <span class="post__date"> {{dateFormat(post.date)}}</span>
@@ -6,11 +8,11 @@
             <div class="post__content">
                 <p class="post__text">{{ post.text }}</p>
             </div>
-            <div class="post__actions">
 
-                <button v-if="user.id === post.userId || user.admin" @click.prevent="deletePost">Supprimer</button>
-            </div>
+            <button class="post__btn" v-if="user.id === post.userId || user.admin" @click.prevent="deletePost">Supprimer</button>
+            
     </div>
+  </div>
 
 </template>
 
@@ -69,3 +71,38 @@ export default {
   }    
 }
 </script>
+
+<style lang="scss" scoped>
+
+    .post {
+      
+        margin: 50px auto 30px auto;
+        padding: 30px;
+        max-width: 800px;
+        text-align: left;
+        border-bottom: solid #9b4747 5px;
+
+        &__title {
+          margin: 0;
+          color: #9b4747;
+          font-size: 2rem;
+        }
+
+        &__content {
+          margin-top: 20px;
+        }
+        
+        &__btn{
+          width: 10%;
+          margin: 20px auto;
+          padding: 8px;
+          font-size: 0.9em;
+          color: white;
+          background-color: #9b4747;
+          border: none;
+          border-radius: 10px;
+          cursor: pointer;
+        }
+    }
+   
+</style>

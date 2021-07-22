@@ -9,7 +9,7 @@
             <h2 class="post__title">{{ post.title }}</h2></router-link>
 
           <div class="post__info">
-            <span class="post__info__date">{{dateFormat(post.date)}}</span>
+            <span class="post__info__date">{{dateFormat(post.date)}}</span><br>
             <span class="post__info__author">{{ post.name }}</span>
           </div>
         </div>
@@ -67,4 +67,31 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+  .posts {
+        margin: 0 auto;
+        padding: 20px;
+        max-width: 800px;
+    }
+
+    .post {
+        padding: 20px;
+        margin-bottom: 30px;
+        border: 3px solid #9b4747;
+        text-align: left;
+
+        &__header {
+          display: flex;
+          justify-content: space-between;
+          color: rgb(0, 0, 0);
+          font-size: .8rem;
+        }
+
+        &__title {
+          color: #9b4747
+        }
+    }
+
+</style>
 
