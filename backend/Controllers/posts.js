@@ -1,6 +1,15 @@
 const DB = require("../database_connection");
 const jwt = require("jsonwebtoken");
 
+function isAdmin(userId) {
+  return new Promise((resolve) => {
+    const admin = DB.query(
+      `SELECT * FROM users WHERE admin=1 AND id=${userId}`,
+      (error, results, fields) => resolve(results.length)
+    );
+  })
+};
+
 exports.createPost = (req, res, next) => {
   const token = req.headers.authorization.split(" ")[1];
   const decodedToken = jwt.verify(token, process.env.TOKEN);
@@ -43,7 +52,7 @@ exports.getAllPosts = (req, res, next) => {
   });
 };
 
-exports.deletePost = (req, res, next) => {
+exports.deletePost = async (req, res, next) => {
   const userPostId = DB.query(
     `SELECT userId FROM posts WHERE posts.id = ${req.params.id}`,
     (error, results, fields) => {
@@ -58,16 +67,9 @@ exports.deletePost = (req, res, next) => {
   const decodedToken = jwt.verify(token, process.env.TOKEN);
   const userId = decodedToken.userId;
 
-  let isAdmin = 1;
-  const admin = DB.query(
-    `SELECT * FROM users WHERE admin=1 AND id=${userId}`,
-    (error, results, fields) => {
-      if (error || !results) {
-        isAdmin = 0;
-      }
-    }
-  );
+  let admin = await isAdmin(userId);
 
+  console.log("bidule", admin);
   if (userPostId == userId || admin) {
     DB.query(
       `DELETE FROM posts WHERE posts.id = ${req.params.id}`,

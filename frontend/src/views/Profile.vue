@@ -14,49 +14,32 @@
 <script>
 
 import UserService from "/services/user-services";
+import {mapState} from "vuex";
 
 export default {
     name: "Profile",
 
-data() {
-    return{
-     name: "",
-      email: "",
-      user: {},
-    }
-  },
     
-mounted(){
-    this.getProfile();
-  },
+  computed: mapState({
+    user: (state) => state.user,
+  }),
 
   methods: {
-    getProfile(){
-    const id = this.$route.params.id;
-    UserService.getProfile(id)
-      .then(res => {
-        this.user = res.data[0];
-        this.id = id;
-      })
-      .catch((e) => {
-        console.log(e);
-      })
-    },
-
     deleteProfile(){
-     
-        const id = this.$route.params.id;
+      const id = this.user.id;
 
             UserService.deleteProfile(id)
-            .then(
-              localStorage.removeItem('userToken')
-            )
+              .then( () => {
+                this.$store.dispatch("setAuthUser", {})
+                this.$store.dispatch("setToken", null)
+                this.$router.push("/signup")
+              })
       .catch((e) => {
         console.log(e);
       })
-          
+    
         
-      }
+    }
 
 }, 
 

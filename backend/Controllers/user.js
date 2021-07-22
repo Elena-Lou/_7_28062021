@@ -60,8 +60,7 @@ exports.login = (req, res, next) => {
             }
 
             res.status(200).json({
-              userId: results[0].id,
-              name: results[0].name,
+              user: {...results[0]},
               token: jwt.sign(
                 { userId: results[0].id, admin: results[0].admin },
                 process.env.TOKEN,
@@ -81,7 +80,7 @@ exports.login = (req, res, next) => {
 };
 
 //acces au profil utlisateur
-exports.viewUser = (req, res, next) => {
+exports.getProfile = (req, res, next) => {
   DB.query(
     `SELECT * FROM users WHERE users.id = ${req.params.id}`,
     (error, results, fields) => {
@@ -95,7 +94,7 @@ exports.viewUser = (req, res, next) => {
 };
 
 //suppression du profil utilisateur
-exports.deleteUser = (req, res, next) => {
+exports.deleteProfile = (req, res, next) => {
   DB.query(
     `DELETE FROM users WHERE users.id = ${req.params.id}`,
     (error, results, fields) => {

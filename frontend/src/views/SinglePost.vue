@@ -8,7 +8,7 @@
             </div>
             <div class="post__actions">
 
-                <button v-if="sessionUserId === id || isAdmin" @click.prevent="deletePost">Supprimer</button>
+                <button v-if="user.id === post.userId || user.admin" @click.prevent="deletePost">Supprimer</button>
             </div>
     </div>
 
@@ -23,9 +23,7 @@ export default {
 
   data() {
     return{
-      id: null,
       post: [],
-      isAdmin: true,
     };
   },
   
@@ -33,8 +31,8 @@ export default {
     this.getOnePost();
   },
   computed: mapState({
-    sessionUserId : (state) => state.sessionUserId,
-    isAdmin : (state) => state.isAdmin
+    user : (state) => state.user,
+  
   }),
   
   methods: {

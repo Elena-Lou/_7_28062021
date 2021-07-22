@@ -4,7 +4,9 @@ import router from "./router";
 import store from "./store";
 
 
-createApp(App)
+createApp({...App, beforeCreate(){
+  this.$store.commit("INITIALIZE_STORE")
+}})
   .use(store)
   .use(router)
   .mount("#app");

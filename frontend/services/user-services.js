@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const token = localStorage.getItem("userToken");
+import Store from "../src/store/index";
 
 const commonConfig = {
   baseURL: "http://localhost:3000/api/auth",
@@ -13,8 +12,7 @@ export default {
   signup(data) {
     return authUser.post("/signup", data, {
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
       },
     });
   },
@@ -22,13 +20,13 @@ export default {
   login(data) {
     return authUser.post("/login", data, {
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
       },
     });
   },
 
   getProfile(id) {
+    const token = Store.getters.token;
     return authUser.get("/user/" + id, {
       headers: {
         "Content-Type": "application/json",
@@ -38,6 +36,7 @@ export default {
   }, 
 
   deleteProfile(id) {
+    const token = Store.getters.token;
     return authUser.delete("/user/" + id, {
       headers: {
         "Content-Type": "application/json",

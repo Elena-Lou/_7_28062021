@@ -9,19 +9,19 @@
 
       <ul class="nav__list ">
 
-        <li v-if="connected" class="nav__list__item">
+        <li v-if="token" class="nav__list__item">
           <router-link to="/posts" id="posts" title="Voir les publications">Les publications</router-link>
         </li>
 
-        <li v-if="connected" class="nav__list__item">
+        <li v-if="token" class="nav__list__item">
           <router-link to="/post" class="nav__list__link" id="newpost" title="Créez une publication">Créer une publication</router-link>
         </li>
 
-        <li v-if="connected" class="nav__list__item">
-          <router-link :to=" `/user/${sessionUserId}`" id="profile" class="nav__list__link" title="Voir ou modifier mon compte">Mon profil</router-link>
+        <li v-if="token" class="nav__list__item">
+          <router-link :to=" `/user/${user.id}`" id="profile" class="nav__list__link" title="Voir ou modifier mon compte">Mon profil</router-link>
         </li>
 
-        <li v-if="connected" class="nav__list__item">
+        <li v-if="token" class="nav__list__item">
           <button class="nav__list__btn" @click.prevent="logout()" title="Déconnexion">Se déconnecter</button>
         </li>
 
@@ -35,49 +35,21 @@
 <script>
 
 import {mapState} from "vuex";
-import UserServices from "/services/user-services";
 
 export default {
   name: "Header",
-  
-  data() {
-    return {
-      user: [],
-      connected: true
-    }
-  },
+ 
   computed: mapState({
-    sessionUserId : (state) => state.sessionUserId,
-    isAdmin : (state) => state.isAdmin
+    user: (state) => state.user,
+    token : (state) => state.token
   }),
 
-  beforeMount(){
-    this.checkConnected()
-  },
-  
   methods: {
-    checkConnected(){
-      const token = localStorage.getItem("userToken");
-      if(!token){
-        this.connected = false;
-        console.log("non connecté");
-      } else if(token) {
-        this.connected = true;
-        console.log("connecté");
-      }
-    },
-
-    getProfile(){
-    let userId = this.sessionUserId;
-    UserServices.getProfile(userId)
-      .then(res => {
-        this.user = res.data[0];
-      })
-    },
-
+  
     logout() {
-        localStorage.removeItem('userToken');
-        location.href = '/';
+        this.$store.dispatch("setAuthUser", {});
+        this.$store.dispatch("setToken", null);
+        this.$router.push("/")
     }
   }
 }

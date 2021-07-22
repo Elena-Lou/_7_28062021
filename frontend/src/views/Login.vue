@@ -34,8 +34,10 @@ export default {
         }
     },
     mounted() {                                       
-      localStorage.removeItem('userToken');    
+      this.$store.dispatch("setAuthUser", {});
+      this.$store.dispatch("setToken", null);  
     },
+    
   methods: {
     login() {
         UserService.login({
@@ -43,7 +45,9 @@ export default {
           password: this.password
         })
       .then((res) => {
-        localStorage.setItem('userToken', res.data.token),   
+          console.log(res);
+        this.$store.dispatch("setAuthUser", res.data.user);
+        this.$store.dispatch("setToken", res.data.token);  
         this.$router.push('/posts');                          
       })
       .catch((e) => {
@@ -55,6 +59,7 @@ export default {
   }
 }
 </script>
+
 
 <style lang="scss" scoped>
 

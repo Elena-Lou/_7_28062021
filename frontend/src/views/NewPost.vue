@@ -18,6 +18,7 @@
 </template>
 
 <script>
+
 import PostService from "/services/post-services";
 
 import {mapState} from "vuex";  
@@ -33,13 +34,12 @@ export default {
   },
 
   computed: mapState({
-    sessionUserId : (state) => state.sessionUserId, 
-    isAdmin : (state) => state.isAdmin
+    user: (state) => state.user.id, 
   }),
 
   methods: {
     createPost() {
-      let userId = this.sessionUserId;
+      let userId = this.user.id;
       let data = { 
         title: this.title,
         text: this.text

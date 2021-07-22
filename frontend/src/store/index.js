@@ -5,24 +5,52 @@ import Vuex from "vuex";
 
 export default new Vuex.Store({
   state: {
-    sessionUserId: null,
-    isAdmin: false,
+    user: {
+      id: null,
+      name: null,
+      email: null,
+      admin: null
+    },
+    token: null
   },
+
   mutations: {
-    SET_USER_ID(state, user) {
-      state.sessionUserId = user;
+    SET_USER(state, user) {
+      state.user = user;
+      localStorage.setItem("user", JSON.stringify(user))
     },
-    SET_ADMIN(state, isAdmin) {
-      state.isAdmin = isAdmin;
+    SET_TOKEN(state, token) {
+      state.token = token;
+      localStorage.setItem("token", JSON.stringify(token));
     },
+    INITIALIZE_STORE(state) {
+      if(localStorage.getItem("token")) {
+        state.token = JSON.parse(localStorage.getItem("token"));
+      } 
+      if(localStorage.getItem("user")) {
+        state.user = JSON.parse(localStorage.getItem("user"))
+      }
+    }
   },
+
   actions: {
-    setAuthUser({ commit }, sessionUserId) {
-      commit("SET_USER_ID", sessionUserId);
+    setAuthUser({ commit }, user) {
+      commit("SET_USER", user);
     },
-    setAdmin({ commit }, isAdmin) {
-      commit("SET_ADMIN", isAdmin);
+
+    setToken({ commit }, token) {
+      commit("SET_TOKEN", token);
     },
   },
   modules: {},
+
+  getters: {
+    token(state) {
+      return state.token
+    },
+
+    user(state) {
+      return state.user
+    }
+  }
 });
