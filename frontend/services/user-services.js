@@ -8,27 +8,41 @@ const commonConfig = {
 
 const authUser = axios.create({ ...commonConfig });
 
-authUser.interceptors.request.use(function(config) {
-  // Interceptors axios pour introduire le header d'authentification
-  config.headers = { Authorization: `Bearer ${token}` };
-  return config;
-});
-
 export default {
   authUser,
   signup(data) {
-    return authUser.post("/signup", data);
+    return authUser.post("/signup", data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
 
   login(data) {
-    return authUser.post("/login", data);
+    return authUser.post("/login", data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
 
   getProfile(id) {
-    return authUser.get("/user/" + id);
-  },
+    return authUser.get("/user/" + id, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }, 
 
   deleteProfile(id) {
-    return authUser.delete("/user/" + id);
+    return authUser.delete("/user/" + id, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
 };

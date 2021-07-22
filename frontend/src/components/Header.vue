@@ -51,7 +51,7 @@ export default {
     isAdmin : (state) => state.isAdmin
   }),
 
-  created(){
+  beforeMount(){
     this.checkConnected()
   },
   

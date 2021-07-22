@@ -7,7 +7,7 @@ exports.createPost = (req, res, next) => {
   const userId = decodedToken.userId;
 
   DB.query(
-    `INSERT INTO posts (post_title, post_text, post_date, user_id) VALUES ("${req.body.post_title}", "${req.body.post_text}", NOW(), ${userId})`,
+    `INSERT INTO posts (title, text, date, userId) VALUES ('${req.body.title}', '${req.body.text}', NOW(), ${userId})`,
     (error, results, fields) => {
       if (error) {
         return res.status(400).json({ error });
@@ -33,11 +33,11 @@ exports.getOnePost = (req, res, next) => {
 };
 
 exports.getAllPosts = (req, res, next) => {
-  DB.query(`SELECT * FROM posts ORDER BY post_date DESC`, (error, results) => {
+  DB.query(`SELECT users.name, posts.id, posts.userId, posts.title, posts.text, posts.date AS date FROM users INNER JOIN posts ON users.id = posts.userId ORDER BY date DESC`, (error, results) => {
     if (error) {
       return res.status(400).json({ error });
     } else {
-      console.log(results);
+      console.log(results); 
       res.status(200).json(results);
     }
   });
@@ -45,7 +45,7 @@ exports.getAllPosts = (req, res, next) => {
 
 exports.deletePost = (req, res, next) => {
   const userPostId = DB.query(
-    `SELECT user_id FROM posts WHERE posts.id = ${req.params.id}`,
+    `SELECT userId FROM posts WHERE posts.id = ${req.params.id}`,
     (error, results, fields) => {
       if (error) {
         return res.status(404).json({ error });

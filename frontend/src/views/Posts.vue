@@ -3,21 +3,21 @@
 
   <div class="posts"  v-if="posts.length > 0">
     <article class="post" v-for="post in posts" :key="post.id">
-      
+
         <div class="post__header">
-          <router-link :to="`/posts/'${post.id}`">
-            <h2 class="post__title">{{ post.post_title }}</h2></router-link>
+          <router-link :to="`/posts/${post.id}`">
+            <h2 class="post__title">{{ post.title }}</h2></router-link>
 
           <div class="post__info">
-            <span class="post__info__date">{{post.date}}</span>
-            <span class="post__info__author">{{ post.user}}</span>
+            <span class="post__info__date">{{dateFormat(post.date)}}</span>
+            <span class="post__info__author">{{ post.name }}</span>
           </div>
         </div>
-      </article>
 
-      <div class="post__content">
-        <p class="post__text">{{ post.post_text }}</p>
-      </div>
+        <div class="post__content">
+          <p class="post__text">{{ post.text }}</p>
+        </div>
+      </article>
 
   </div>
 
@@ -42,6 +42,7 @@ export default {
             posts : []                     
         }
     },
+    
     beforeMount() { 
         this.getAllPosts();
     },
@@ -58,11 +59,12 @@ export default {
                 }
             })
         },
-        // dateFormat(date){
-        // const event = new Date(date);
-        // const data = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
-        // return event.toLocaleDateString('fr-FR', data);
-        // }
+
+      dateFormat(date){
+      const event = new Date(date);
+      const data = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+      return event.toLocaleDateString('fr-FR', data);
+    }
     }
 }
 </script>

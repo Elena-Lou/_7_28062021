@@ -8,30 +8,32 @@ const commonConfig = {
 
 const PostService = axios.create({ ...commonConfig });
 
-// PostService.interceptors.request.use(function(config) {
-//   // Interceptors axios pour introduire le header d'authentification
-//   config.headers = { Authorization: `Bearer ${token}` };
-//   return config;
-// });
-
 export default {
   createPost(postData) {
-    return PostService.post("/posts", postData, {
+    return PostService.post('/posts', postData, {
       headers: { "Content-Type": "application/json",
     "Authorization": `Bearer ${token}`},
     });
   },
   getOnePost(id) {
-    return PostService.get("/posts/" + id);
+    return PostService.get('/posts/' + id, {
+      headers: { "Content-Type": "application/json",
+    "Authorization": `Bearer ${token}`},
+    });
   },
   getAllPosts() {
-    return PostService.get("/posts", {
+    return PostService.get('/posts', {
       headers: { "Content-Type": "application/json",
     "Authorization": `Bearer ${token}`}
     })
   },
 
   deletePost(id) {
-    return PostService.delete("/posts/" + id);
+    return PostService.delete('/posts/' + id, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
 };

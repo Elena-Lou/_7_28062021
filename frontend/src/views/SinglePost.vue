@@ -1,15 +1,14 @@
 <template>
     <div class="post__header">
-       <h2 class="post__title">{{ post.post_title }}</h2>
+       <h2 class="post__title">{{ post.title }}</h2>
             <span class="post__date"> {{dateFormat(post.date)}}</span>
-            <span class="post__author">{{ post.user }}</span>
 
             <div class="post__content">
-                <p class="post__text">{{ post.post_text }}</p>
+                <p class="post__text">{{ post.text }}</p>
             </div>
             <div class="post__actions">
 
-                <button v-if="sessionUserId === id || isAdmin === 1" @click.prevent="deletePost">Supprimer</button>
+                <button v-if="sessionUserId === id || isAdmin" @click.prevent="deletePost">Supprimer</button>
             </div>
     </div>
 
@@ -26,6 +25,7 @@ export default {
     return{
       id: null,
       post: [],
+      isAdmin: false,
     };
   },
   
@@ -43,9 +43,9 @@ export default {
         PostService.getOnePost(postId)
         .then(res => {
           this.post = res.data[0];
-          this.id = res.data[0].postAuthorId;
-          this.adminAccess = res.data[0].postAdmin;
+          this.id = res.data[0].userId;
         })
+
         .catch(error => {
           console.log( error )
         })
@@ -56,8 +56,7 @@ export default {
       PostService.deletePost(postId)
       .then((res) => {
         this.post = res.data[0];
-        this.message = res.data.message;
-        setTimeout( () => this.$router.push({ path: '/posts'}), 2500);
+        this.$router.push({ path: '/posts'});
       })
       .catch(error => {
           console.log( error )

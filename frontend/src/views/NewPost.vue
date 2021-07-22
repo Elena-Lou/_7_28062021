@@ -4,10 +4,10 @@
         <form class="post__form">
 
             <label class="post__form__label" for="post_title">Titre</label>
-            <input class="post__form__input" name="post_title" v-model="post_title" id="new__post__title" type="text" placeholder="Titre de votre publication" required>
+            <input class="post__form__input" name="title" v-model="title" id="new__post__title" type="text" placeholder="Titre de votre publication" required>
 
             <label class="post__form__label" for="post_content">Votre publication</label>
-            <textarea class="post__form__text" name="post_text" v-model="post_text" id="form__post__content"></textarea>
+            <textarea class="post__form__text" name="text" v-model="text" id="form__post__content"></textarea>
 
             <button class="post__form__btn" @click.prevent="createPost" type="submit">Publier</button>
         </form>
@@ -21,14 +21,14 @@
 import PostService from "/services/post-services";
 
 import {mapState} from "vuex";  
-                    // Importation données de Vuex store
+
 export default {
   name: "NewPost",
 
   data() {
     return {
-      post_title: "",
-      post_text: "",
+      title: "",
+      text: "",
     }
   },
 
@@ -40,9 +40,10 @@ export default {
   methods: {
     createPost() {
       let userId = this.sessionUserId;
-      const formCreate = document.getElementsByClassName("formCreate")[0];
+      const formCreate = document.getElementsByClassName("post__form")[0];
       let data = new FormData(formCreate);
       let postData = (userId, data);
+      console.log(formCreate);
           
       PostService.createPost(postData)
       .then(res => {
