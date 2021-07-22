@@ -40,15 +40,20 @@ export default {
   methods: {
     createPost() {
       let userId = this.sessionUserId;
-      const formCreate = document.getElementsByClassName("post__form")[0];
-      let data = new FormData(formCreate);
+      let data = { 
+        title: this.title,
+        text: this.text
+      };
+
       let postData = (userId, data);
-      console.log(formCreate);
+      console.log(data);
           
       PostService.createPost(postData)
       .then(res => {
-        if (res) {
-          setTimeout( () => this.$router.go(), 2500);
+        if (res.status === 201) { 
+          setTimeout( () => this.$router.push("/posts"), 1500);
+        } else {
+          console.log("erreur d'envoi");
         }
       })
       .catch(e => {

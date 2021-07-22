@@ -25,7 +25,7 @@ export default {
     return{
       id: null,
       post: [],
-      isAdmin: false,
+      isAdmin: true,
     };
   },
   
