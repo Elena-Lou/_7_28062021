@@ -16,7 +16,6 @@ exports.createPost = (req, res, next) => {
   const token = req.headers.authorization.split(" ")[1];
   const decodedToken = jwt.verify(token, process.env.TOKEN);
   const userId = decodedToken.userId;
-
   DB.query(
     `INSERT INTO posts (title, text, date, userId) VALUES ('${req.body.title}', '${req.body.text}', NOW(), ${userId})`,
     (error, results, fields) => {
@@ -64,7 +63,6 @@ exports.deletePost = async (req, res, next) => {
       }
     }
   );
-
   const token = req.headers.authorization.split(" ")[1];
   const decodedToken = jwt.verify(token, process.env.TOKEN);
   const userId = decodedToken.userId;

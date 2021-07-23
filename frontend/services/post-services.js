@@ -27,7 +27,6 @@ export default {
 
   getAllPosts() {
     const token = Store.getters.token;
-    console.log(token);
     return PostService.get('/posts', {
       headers: { "Content-Type": "application/json",
     "Authorization": `Bearer ${token}`}

@@ -1,17 +1,22 @@
 <template>
-  <div class="post">
+  <div class="container">
+    <div class="post">
 
-    <div class="post__header">
-       <h2 class="post__title">{{ post.title }}</h2>
+      <div class="post__header">
+        <h2 class="post__title">{{ post.title }}</h2>
             <span class="post__date"> {{dateFormat(post.date)}}</span>
+      </div>
 
-            <div class="post__content">
-                <p class="post__text">{{ post.text }}</p>
-            </div>
+      <div class="post__content">
+        <p class="post__text">{{ post.text }}</p>
+      </div>
 
-            <button class="post__btn" v-if="user.id === post.userId || user.admin" @click.prevent="deletePost">Supprimer</button>
-            
+      <button class="post__btn" v-if="user.id === post.userId || user.admin" @click.prevent="deletePost">Supprimer</button>    
+      
     </div>
+
+      <Comments/> 
+
   </div>
 
 </template>
@@ -19,8 +24,13 @@
 <script>
 import PostService from "/services/post-services";
 import { mapState } from "vuex";
+import Comments from '../components/Comments.vue';
 
 export default {
+  components: { 
+    Comments 
+  },
+
   name: 'SinglePost',
 
   data() {
@@ -55,9 +65,9 @@ export default {
 
       PostService.deletePost(postId)
         .then((res) => {
-          this.post = res.data[0];
-          this.$router.push({ path: '/posts'});
-      })
+            this.post = res.data[0];
+            this.$router.push({ path: "/posts"});
+        })
         .catch(error => {
           console.log( error )
       })

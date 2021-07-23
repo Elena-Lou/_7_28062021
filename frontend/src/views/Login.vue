@@ -9,7 +9,7 @@
             <input class="login__form__input" name="email" v-model="email" id="email" type="email" placeholder="albertcamus@groupomania.com" required> 
 
             <label class="login__form__label" for="password">Votre mot de passe :</label>
-            <input class="login__form__input" name="password" v-model="password" id="password" type="text" placeholder="Mot de passe" required/>
+            <input class="login__form__input" name="password" v-model="password" id="password" type="password" placeholder="Mot de passe" required/>
 
             <button class="btn__login" @click.prevent="login()" type="submit">Se connecter</button>
 

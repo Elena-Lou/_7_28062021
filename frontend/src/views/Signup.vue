@@ -12,7 +12,7 @@
       <input class="signup__form__input" name="email" v-model.trim="email" id="email" type="email" placeholder="albertcamus@groupomania.com" required/> 
 
       <label class="signup__form__label" for="password">Votre mot de passe :</label>
-      <input class="signup__form__input" name="password" v-model="password" id="password" type="text" placeholder="Mot de passe" required/>
+      <input class="signup__form__input" name="password" v-model="password" id="password" type="password" placeholder="Mot de passe" required/>
 
         <button class="signup__form__btn" type="submit" @click.prevent="signup()">S'inscrire</button>
 
