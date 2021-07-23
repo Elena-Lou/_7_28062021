@@ -11,7 +11,7 @@ const CommentService = axios.create({ ...commonConfig });
 export default {
   createComment(postId, commentData) {
     const token = Store.getters.token;
-    return CommentService.post("/posts/" + postId, commentData, {
+    return CommentService.post("/comments/" + postId, commentData, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -21,7 +21,7 @@ export default {
 
   getAllComments(postId) {
     const token = Store.getters.token;
-    return CommentService.get("/posts/" + postId, {
+    return CommentService.get("/comments/" + postId, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

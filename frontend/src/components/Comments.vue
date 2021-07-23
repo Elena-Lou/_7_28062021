@@ -1,10 +1,10 @@
 <template>
-  <div class="comment">
+    <div class="comment">
       
         <form class="comment__form">
 
             <label for="comment__form__label">Laissez un commentaire :</label>
-            <textarea class="comment__form__text" name="comment__form__text" v-model="text" id="form__post__text" placeholder="Laissez un commentaire..." required></textarea>
+            <textarea class="comment__form__text" name="comment__form__text" v-model="text" id="form__post__text" placeholder="Votre commentaire..." required></textarea>
 
             <button class="comment__form__btn" @click.prevent="createComment" type="submit" id="send-comment">Envoyer</button>
         
@@ -12,17 +12,12 @@
 
         <h3 v-if="comments.length > 0">Commentaires :</h3>
 
-            <div class="comments" v-for="comment in comments" :key="comment.id">
-
-                <div class="comments__details">
+                <div class="comments" v-for="comment in comments" :key="comment.id" >
                     <span>Par {{comment.name}} le {{dateFormat(comment.date)}}</span>
-                    <p class="comments__text">{{comment.content}}</p>
+                    <p class="comments__text">{{comment.text}}</p>
+                    <!-- <span @click="deleteComment(comment.id)" v-if="user.admin" :key="comment.id">Supprimer</span> -->
                 </div>
-
-                <button class="comments__btn" v-if="user.id === comment.userId || user.admin" @click.prevent="deleteComment"></button>
-            
-            </div>
-        </div>
+    </div>
         
 </template>
 
@@ -44,8 +39,8 @@ export default {
     },
      //gets user ID from the {user} stored
     computed: mapState({
-        user: (state) => state.user.id, 
-  }),
+        user: (state) => state.user, 
+    }),
 
     beforeMount() { 
         this.getAllComments();
@@ -53,17 +48,16 @@ export default {
 
     methods: {
         createComment(){
-            let userId = this.user.id;
-            let data = { 
+            let commentData = { 
             text: this.text
             };
 
-            let postData = (userId, data);
+            let postId = this.$route.params.id
 
-            CommentService.createComment(postData)
+            CommentService.createComment(postId, commentData)
                 .then(res => {
                     if (res.status === 201) { 
-                        setTimeout( () => this.getAllComments());
+                        setTimeout( () => this.getAllComments(), 1000 );
                     } else {
                         console.log("erreur d'envoi");
                     }
@@ -78,7 +72,8 @@ export default {
             const postId = this.$route.params.id;
             CommentService.getAllComments(postId)
               .then(res => {
-                this.posts = res.data;
+                this.comments = res.data;
+                console.log(res.data.comment.id);
             })
             .catch((e) => {
                 if (e.response.status === 400) {
@@ -152,6 +147,25 @@ export default {
         }
     }
 
+    h3 {
+        text-align: left;
+        width: 80%;
+        margin: auto;
+        padding-bottom: 15px;
+    }
+
+    .comments {
+        width: 80%;
+        text-align: left;
+        margin: auto;
+        padding: 10px;
+
+        & span {
+            font-style: italic;
+            font-size: 0.8em;
+        }
+
+    }
 
 </style> 
     

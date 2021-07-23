@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="post__container">
     <div class="post">
 
       <div class="post__header">
@@ -12,7 +12,6 @@
       </div>
 
       <div class="post__btn">
-        <!-- <button class="post__btn__modify" v-if="user.id === post.userId" @click.prevent="modifyPost">Modifier</button> -->
         <button class="post__btn__delete" v-if="user.id === post.userId || user.admin" @click.prevent="deletePost">Supprimer</button>    
       </div>
 

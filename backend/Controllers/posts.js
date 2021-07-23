@@ -69,23 +69,14 @@ exports.modifyPost = (req, res, next) => {
  
 //get the post's author(user) id
 exports.deletePost = async (req, res, next) => {
-  const userPostId = DB.query(
-    `SELECT userId FROM posts WHERE posts.id = ${req.params.id}`,
-    (error, results, fields) => {
-      if (error) {
-        return res.status(404).json({ error });
-      }
-    }
-  );
   const token = req.headers.authorization.split(" ")[1];
   const decodedToken = jwt.verify(token, process.env.TOKEN);
   const userId = decodedToken.userId;
 
   //needs to wait for isAdmin() to be completed
   let admin = await isAdmin(userId);
-
   //check if current user is the author OR if is admin
-  if (userPostId == userId || admin) {
+  if (admin) {
     DB.query(
       `DELETE FROM posts WHERE posts.id = ${req.params.id}`,
       (error, results, fields) => {
@@ -97,8 +88,15 @@ exports.deletePost = async (req, res, next) => {
       }
     );
   } else {
-    res.status(400).json({
-      message: "vous n'êtes pas autorisé à supprimer cette publication ",
-    });
+    DB.query(
+      `DELETE FROM posts WHERE posts.id = ${req.params.id} AND posts.userId = ${userId}`,
+      (error, results, fields) => {
+        if (error) {
+          return res.status(500).json({ error });
+        } else {
+          return res.status(200).json({ message: "publication supprimée" });
+        }
+      }
+    );
   }
 };
