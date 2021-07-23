@@ -11,8 +11,11 @@
         <p class="post__text">{{ post.text }}</p>
       </div>
 
-      <button class="post__btn" v-if="user.id === post.userId || user.admin" @click.prevent="deletePost">Supprimer</button>    
-      
+      <div class="post__btn">
+        <!-- <button class="post__btn__modify" v-if="user.id === post.userId" @click.prevent="modifyPost">Modifier</button> -->
+        <button class="post__btn__delete" v-if="user.id === post.userId || user.admin" @click.prevent="deletePost">Supprimer</button>    
+      </div>
+
     </div>
 
       <Comments/> 
@@ -48,7 +51,7 @@ export default {
   
   methods: {
 
-    getOnePost(){
+    getOnePost() {
         const postId = this.$route.params.id;
         PostService.getOnePost(postId)
           .then(res => {
@@ -60,7 +63,7 @@ export default {
         })
     },
 
-    deletePost(){
+    deletePost() {
       let postId = this.$route.params.id;
 
       PostService.deletePost(postId)
@@ -85,15 +88,14 @@ export default {
 <style lang="scss" scoped>
 
     .post {
-      
-        margin: 50px auto 30px auto;
+        margin: 50px auto;
         padding: 30px;
-        max-width: 800px;
+        width: 80%;
         text-align: left;
-        border-bottom: solid #9b4747 5px;
+        border-bottom: solid #9b4747 3px;
 
         &__title {
-          margin: 0;
+          margin: 20px 0;
           color: #9b4747;
           font-size: 2rem;
         }
@@ -102,16 +104,37 @@ export default {
           margin-top: 20px;
         }
         
-        &__btn{
-          width: 10%;
-          margin: 20px auto;
-          padding: 8px;
-          font-size: 0.9em;
-          color: white;
-          background-color: #9b4747;
-          border: none;
-          border-radius: 10px;
-          cursor: pointer;
+        &__btn {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;  
+
+          &__modify {
+            min-width: 65px;
+            margin: 20px auto;
+            padding: 8px;
+            font-size: 0.9em;
+            background-color: rgb(51, 48, 48) ;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+
+          }
+
+          &__delete {
+            min-width: 65px;
+            background-color: #9b4747;
+            margin: 20px auto;
+            padding: 8px;
+            font-size: 0.9em;
+            color: white;          
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+
+          }
+
         }
     }
    

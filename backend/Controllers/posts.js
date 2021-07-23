@@ -53,6 +53,20 @@ exports.getAllPosts = (req, res, next) => {
   });
 };
 
+//modify post id user is the author
+exports.modifyPost = (req, res, next) => {
+  DB.query(
+    `UPDATE posts SET title='${req.body.title}', text='${req.body.text}' WHERE posts.id = ${req.params.id}`,
+    (error, results, fields) => {
+      if (error) {
+        return res.status(400).json({ error });
+      } else {
+        res.status(200).json({ message: "publication mise à jour" });
+      }
+    }
+  );
+};
+ 
 //get the post's author(user) id
 exports.deletePost = async (req, res, next) => {
   const userPostId = DB.query(

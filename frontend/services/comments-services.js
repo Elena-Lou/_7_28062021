@@ -29,19 +29,9 @@ export default {
     });
   },
 
-  modifyComment(id, commentData) {
+  deleteComment(commentId) {
     const token = Store.getters.token;
-    return CommentService.get("/comments/" + id, commentData, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-  },
-
-  deleteComment(id) {
-    const token = Store.getters.token;
-    return CommentService.delete("/comments/" + id, {
+    return CommentService.delete("/comments/" + commentId, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

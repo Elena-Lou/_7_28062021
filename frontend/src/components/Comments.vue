@@ -3,8 +3,8 @@
       
         <form class="comment__form">
 
-            <label for="comment__form__label">Laisser un commentaire :</label>
-            <textarea class="comment__form__text" name="comment__form__text" v-model="text" id="form__post__content" placeholder="Laissez un commentaire..." required></textarea>
+            <label for="comment__form__label">Laissez un commentaire :</label>
+            <textarea class="comment__form__text" name="comment__form__text" v-model="text" id="form__post__text" placeholder="Laissez un commentaire..." required></textarea>
 
             <button class="comment__form__btn" @click.prevent="createComment" type="submit" id="send-comment">Envoyer</button>
         
@@ -14,10 +14,13 @@
 
             <div class="comments" v-for="comment in comments" :key="comment.id">
 
-            <div class="comments__details">Par {{comment.name}} le {{dateFormat(comment.date)}} 
-                <span @click="deleteComment(comment.id)" v-if="comment.userId == $user.userId || $user.admin == 1" :key="comment.id">Supprimer</span>
-            </div>
-            {{comment.content}}
+                <div class="comments__details">
+                    <span>Par {{comment.name}} le {{dateFormat(comment.date)}}</span>
+                    <p class="comments__text">{{comment.content}}</p>
+                </div>
+
+                <button class="comments__btn" v-if="user.id === comment.userId || user.admin" @click.prevent="deleteComment"></button>
+            
             </div>
         </div>
         
@@ -71,7 +74,7 @@ export default {
 
         },
 
-        getAllComments(){
+        getAllComments() {
             const postId = this.$route.params.id;
             CommentService.getAllComments(postId)
               .then(res => {
@@ -84,11 +87,11 @@ export default {
             })
         },
 
-        deleteComment(){
+        deleteComment() {
             let commentId = this.comment.id;
             console.log(commentId);
             let postId = this.$route.params.id
-           CommentService.deleteComment(commentId)
+            CommentService.deleteComment(commentId)
                 .then((res) => {
                     this.comment = res.data[0];
                     this.$router.push({ path: "/posts/"+ postId});
@@ -109,68 +112,46 @@ export default {
 
 <style lang="scss" scoped>
 
-    .Comments{
-        max-width: 800px;
-        margin: 0 auto;
+    .comment {
+        width: 100%;
         padding: 30px;
+
+        &__form {
+            width: 50%;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+
+            &__label {
+                text-align: left;
+                font-size: 0.8rem;
+                font-weight: bold;
+                color: rgb(109, 109, 109);
+                text-align: left;
+            }
+
+            &__text {
+                margin: 20px 0px 20px 0px;
+                height: 70px;
+                padding: 10px;
+                resize: none;
+                overflow-y: scroll;
+            }
+
+            &__btn {
+                min-width: 65px;
+                margin: 20px auto;
+                padding: 8px;
+                font-size: 0.9em;
+                color: white;
+                background-color: #9b4747;
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+            }
+        }
     }
-    label{
-        text-align: left !important;
-    }
-    textarea{
-        margin: 20px 0px 20px 0px;
-        height: 70px;
-        width: calc(100% - 22px);
-        padding: 10px;
-        resize: none;
-        overflow-y: scroll;
-    }
-    button{
-        margin-top: 20px;
-        padding: 10px;
-        font-size: 1.1rem;
-        color: white;
-        background-color: rgb(43, 42, 42);
-        border: none;
-        border-radius: 10px;
-        transition-duration: 0.2s;
-        cursor: pointer;
-        margin: 0px 20px 50px 20px;
-    }
-    .comment{
-        padding: 20px 20px 20px 30px;
-        border-left: 5px solid rgb(43, 42, 42);
-        margin-top: 20px;
-        box-shadow: 0px 0px 50px -7px rgba(0,0,0,0.1);
-        text-align: left;
-        transition-duration: .1s;
-    }
-    .comment-info{
-        display: flex;
-        justify-content: space-between;
-        color: rgb(0, 0, 0);
-        font-size: .8rem;
-        margin-bottom: 10px;
-    }
-    .comment-info span{
-        cursor: pointer;
-        color: rgb(255, 0, 0);
-        font-weight: bold;
-    }
-    label{
-        font-size: 0.8rem;
-        font-weight: bold;
-        color: rgb(109, 109, 109);
-        text-align: left;
-        border: 0;
-        clip: rect(0 0 0 0);
-        height: 1px;
-        margin: -1px;
-        overflow: hidden;
-        padding: 0;
-        position: absolute;
-        width: 1px;
-    }
+
 
 </style> 
     

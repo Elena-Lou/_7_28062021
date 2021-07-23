@@ -40,20 +40,6 @@ exports.getAllComments = (req, res, next) => {
     }
   );
 };
- 
-exports.modifyComment = (req, res, next) => {
-  DB.query(
-    `UPDATE comments SET text="${req.body.text}" WHERE comments.id = ${req.params.id}`,
-    (error, results, fields) => {
-      if (error) {
-        return res.status(400).json({ error });
-
-      } else {
-        res.status(200).json({ message: "commentaire mis à jour" });
-      }
-    }
-  ); 
-}; 
 
 exports.deleteComment = async (req, res, next) => {
   const userCommentId = DB.query(
