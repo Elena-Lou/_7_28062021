@@ -16,6 +16,7 @@ exports.addComment = (req, res, next) => {
   const token = req.headers.authorization.split(" ")[1];
   const decodedToken = jwt.verify(token, process.env.TOKEN);
   const userId = decodedToken.userId;
+  
   DB.query(
     `INSERT INTO comments (text, date, postId, userId) VALUES ( "${req.body.text}", NOW(), ${req.params.id}, ${userId})`,
     (error, results, fields) => {

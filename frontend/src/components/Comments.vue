@@ -114,7 +114,7 @@ export default {
 
     .comment {
         width: 100%;
-        padding: 30px;
+        margin: auto;
 
         &__form {
             width: 50%;

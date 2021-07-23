@@ -70,11 +70,12 @@ export default {
       display: flex;
       flex-direction: column;
       padding: 5%;
-      width: 80%;
+      width: 100%;
       margin: auto;
       height: 300px;
 
         &__form {
+          width: 80%;
           display: flex;
           flex-direction: column;
           text-align: center;
