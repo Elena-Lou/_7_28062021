@@ -86,7 +86,6 @@ export default {
         },
 
         deleteComment(commentId) {
-            console.log(commentId);
             CommentService.deleteComment(commentId)
                 .then((res) => {
                     this.comment = res.data[0];
