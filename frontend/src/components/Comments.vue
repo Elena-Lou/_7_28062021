@@ -1,7 +1,7 @@
 <template>
     <div class="comment">
       
-        <form class="comment__form">
+        <form class="comment__form" id="commentForm">
 
             <label for="comment__form__label">Laissez un commentaire :</label>
             <textarea class="comment__form__text" name="comment__form__text" v-model="text" id="form__post__text" placeholder="Votre commentaire..." required></textarea>
@@ -15,7 +15,7 @@
                 <div class="comments" v-for="comment in comments" :key="comment.id" >
                     <span>Par {{comment.name}} le {{dateFormat(comment.date)}}</span>
                     <p class="comments__text">{{comment.text}}</p>
-                    <!-- <span @click="deleteComment(comment.id)" v-if="user.admin" :key="comment.id">Supprimer</span> -->
+                    <button class="comments__btn" @click="deleteComment(comment.id)" v-if="user.admin" :key="comment.id">Supprimer</button>
                 </div>
     </div>
         
@@ -34,17 +34,20 @@ export default {
     data(){
         return{
             text: "",
-            comments: []
+            comments: [],
+            comment: []
         }
     },
+
+    beforeMount() { 
+        this.getAllComments();
+    },
+
      //gets user ID from the {user} stored
     computed: mapState({
         user: (state) => state.user, 
     }),
 
-    beforeMount() { 
-        this.getAllComments();
-    },
 
     methods: {
         createComment(){
@@ -57,7 +60,9 @@ export default {
             CommentService.createComment(postId, commentData)
                 .then(res => {
                     if (res.status === 201) { 
-                        setTimeout( () => this.getAllComments(), 1000 );
+                        this.text = res.data[0]
+                        setTimeout( () =>
+                         this.getAllComments(), 1000 );
                     } else {
                         console.log("erreur d'envoi");
                     }
@@ -73,23 +78,19 @@ export default {
             CommentService.getAllComments(postId)
               .then(res => {
                 this.comments = res.data;
-                console.log(res.data.comment.id);
+  
             })
-            .catch((e) => {
-                if (e.response.status === 400) {
-                  console.log("Il n'y a pas de commentaires");
-                }
-            })
+            .catch(error => {
+          console.log( error )
+      })
         },
 
-        deleteComment() {
-            let commentId = this.comment.id;
+        deleteComment(commentId) {
             console.log(commentId);
-            let postId = this.$route.params.id
             CommentService.deleteComment(commentId)
                 .then((res) => {
                     this.comment = res.data[0];
-                    this.$router.push({ path: "/posts/"+ postId});
+                    this.getAllComments();
                 })
                 .catch(error => {
                     console.log( error )
@@ -163,6 +164,11 @@ export default {
         & span {
             font-style: italic;
             font-size: 0.8em;
+        }
+
+        &__btn {
+            color: #9b4747;
+            font-weight: bold;
         }
 
     }

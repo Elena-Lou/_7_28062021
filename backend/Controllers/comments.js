@@ -31,12 +31,13 @@ exports.addComment = (req, res, next) => {
 
 exports.getAllComments = (req, res, next) => {
   DB.query(
-    `SELECT users.name, comments.userId, comments.postId, comments.text, comments.date AS date FROM users INNER JOIN comments ON users.id = comments.userId WHERE comments.postId = ${req.params.postId} ORDER BY date DESC`,
+    `SELECT users.name, comments.id, comments.userId, comments.postId, comments.text, comments.date AS date FROM users INNER JOIN comments ON users.id = comments.userId WHERE comments.postId = ${req.params.postId} ORDER BY date DESC`,
     (error, results) => {
       if (error) {
         return res.status(400).json({ error });
       } else {
         res.status(200).json(results);
+        console.log(results);
       }
     }
   );
