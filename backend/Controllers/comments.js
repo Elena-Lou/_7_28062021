@@ -64,7 +64,7 @@ exports.deleteComment = async (req, res, next) => {
     );
   } else {
     DB.query(
-      `DELETE FROM posts WHERE comments.id = ${req.params.id} AND comments.userId = ${userId}`,
+      `DELETE FROM comments WHERE comments.id = ${req.params.id} AND comments.userId = ${userId}`,
       (error, results, fields) => {
         if (error) {
           return res.status(500).json({ error });
